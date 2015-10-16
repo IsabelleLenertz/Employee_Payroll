@@ -16,26 +16,40 @@ using namespace std;
 class Employee {
 public:
 
+	// Default constructor and constructor
     Employee();
+    ~Employee();
 
     /**
-     * Accessors and mutator for this->id
+     * The Employee's Id has to be greater than 0.
+     * Returns true if the id was changed
+     * returns false to indicate failure.
      */
     bool setId( int);
+    /**
+     * Return this->id
+     */
     int getId();
 
     /**
-     * @param string
+     * Changes the name if it does not start with a space and if greater than 1 character
+     * Returns true to indicate success
+     * Returns false to indicate failure
      */
     bool setName( string);
-
+    /**
+     * Returns the name.
+     */
     string getName();
 
     /**
-     * @param string
+     *	Sets up this->hireDate using the Date's setDate function.
+     *	Returns true to indicate success, false to indicate failure.
      */
     bool setDate( string);
-
+    /**
+     * return the date as a usable string.
+     */
     string getDate();
 
     virtual double pay() = 0;

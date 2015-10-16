@@ -10,9 +10,14 @@
 
 
 
-
+// Default constructor
 Employee::Employee() {
 
+}
+
+//Destructor
+Employee::~Employee(){
+	cout << "You are destroying an Employee." << endl;
 }
 
 /**
@@ -94,12 +99,8 @@ string Employee::getDate() {
     return this->hireDate.getDate();
 }
 
-/**
- * @return double
- */
-double Employee::pay() {
-    return 0.0;
-}
+
+
 
 /**
  * @return bool
