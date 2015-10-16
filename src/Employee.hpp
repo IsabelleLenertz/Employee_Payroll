@@ -16,8 +16,15 @@ using namespace std;
 class Employee {
 public:
 
-	// Default constructor and constructor
+	/**
+	 * Default constructor
+	 * Sets the attributes to 0 to signify that they were not initiated.
+	 */
     Employee();
+    /**
+     * Default destructor
+     * Print a deleting message.
+     */
     ~Employee();
 
     /**

@@ -9,42 +9,67 @@
 #define PRODUCTIONWORKER_HPP_
 
 #include "Employee.hpp"
+#include "Utilities.hpp"
 #include <iostream>
 
 using namespace std;
 
+// Enum Datatype use to define the working shift of the production worker.
+enum Shift { INVALID, DAY, NIGHT };
+
 class ProductionWorker: public Employee {
 public:
 
+	/**
+	 * Default constructor
+	 * Sets the attributes to 0 to signify that they were not initiated.
+	 */
     ProductionWorker();
 
     /**
-     * @param int
+     * Default destructor
+     * Print a deleting message.
      */
-    bool setShift( int);
-
-    bool getShift();
+    ~ProductionWorker();
 
     /**
-     * @param double
+     * Changes the shift of the Employee
+     * Returns true to indicate success, false to indicate failure.
+     */
+    bool setShift(string newShift);
+
+    /**
+     * Returns the shift the production worker is working, using the Shift enum datatype
+     */
+    Shift getShift();
+
+    /**
+     * Sets the hourly pay rate of the Production Worker.
+     * has to be >0
+     * return true to indicate success, false to indicate failure.
      */
     bool setPayRate( double);
-
+    /**
+     * Returns the Production Worker's pay rate.
+     */
     double getPayRate();
 
     /**
-     * @param double
+     * Changes the Production Worker hours worked
+     * Has to be >0
+     * returns true to indicate success, false to indicate failure.
      */
     bool setHoursWorked( double);
-
+    /**
+     * Returns the hours worked by the Production Worker
+     */
     double getHoursWorked();
 
     double pay();
-
     bool consoleSetUpAll();
 
 private:
-    int shift;
+    Shift shift;
     double payRate;
     double hoursWorked;
 };

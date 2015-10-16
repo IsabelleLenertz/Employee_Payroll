@@ -9,13 +9,19 @@
 #include "Employee.hpp"
 
 
-
-// Default constructor
+/**
+* Default constructor
+* Sets the attributes to 0 to signify that they were not initiated.
+ */
 Employee::Employee() {
-
+	this->name =  " ";
+	this->id = 0;
 }
 
-//Destructor
+/**
+ * Default destructor
+ * Print a deleting message.
+ */
 Employee::~Employee(){
 	cout << "You are destroying an Employee." << endl;
 }
