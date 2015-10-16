@@ -19,10 +19,9 @@ public:
     Employee();
 
     /**
-     * @param int
+     * Accessors and mutator for this->id
      */
     bool setId( int);
-
     int getId();
 
     /**
