@@ -16,6 +16,8 @@ using namespace std;
 class Employee {
 public:
 
+
+
 	/**
 	 * Default constructor
 	 * Sets the attributes to 0 to signify that they were not initiated.
@@ -60,6 +62,10 @@ public:
     string getDate();
 
     virtual double pay() = 0;
+    /**
+     * Returns the type of employee in a string
+     */
+    virtual string whatAmI() = 0;
 
     virtual bool consoleSetUpAll() = 0;
 

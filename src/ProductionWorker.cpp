@@ -115,10 +115,42 @@ double ProductionWorker::getHoursWorked() {
 }
 
 /**
- * @return double
+ * Pays the Production worker hoursWorked * payRate.
+ * Pays night worker 50% bonus
+ * throws the exceptions : InvalidHoursWorked, InvalidPayRate, InvalidShift if the attributes were not setup properly
  */
 double ProductionWorker::pay() {
-    return 0.0;
+
+	// Throws an exception if this->hoursWorked is not setup properly
+	if (this->hoursWorked <= 0)
+	{
+		throw InvalidHoursWorked();
+	}
+	// Throws an exception if this->hourlyPayRate is not set properly.
+	else if (this->payRate <=0){
+		throw InvalidPayRate();
+	}
+	else if (this->shift == NIGHT ){
+    	// A production worker working night shift is paied 50% bonus
+    	return (this->payRate)*1.5*(this->hoursWorked);
+    }
+    else if (this->shift == DAY){
+    	// Returns the normal pay
+    	return (this->payRate)*(this->hoursWorked);
+    }
+	// Throws an exception if this->shift is not setup properly.
+	else
+	{
+		throw InvalidShift();
+	}
+}
+
+/**
+ * Returns "Production Worker"
+ */
+string ProductionWorker::whatAmI()
+{
+	return "Production Worker";
 }
 
 /**

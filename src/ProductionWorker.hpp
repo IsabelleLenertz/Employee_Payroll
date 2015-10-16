@@ -19,6 +19,15 @@ enum Shift { INVALID, DAY, NIGHT };
 
 class ProductionWorker: public Employee {
 public:
+	/**
+	 * Exception classes.
+	 */
+	class InvalidShift{
+	};
+	class InvalidPayRate{
+	};
+	class InvalidHoursWorked {
+	};
 
 	/**
 	 * Default constructor
@@ -65,7 +74,18 @@ public:
      */
     double getHoursWorked();
 
+    /**
+     * Pays the Production worker hoursWorked * payRate.
+     * Pays night worker 50% bonus
+     * throws the exceptions : InvalidHoursWorked, InvalidPayRate, InvalidShift if the attributes were not setup properly
+     */
     double pay();
+
+    /**
+     * Returns "Production Worker"
+     */
+    string whatAmI();
+
     bool consoleSetUpAll();
 
 private:

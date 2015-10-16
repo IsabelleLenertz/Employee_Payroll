@@ -51,11 +51,17 @@ class TeamLeader: public ProductionWorker {
 		double pay();
 
 		/**
+		 * Returns "Team Leader"
+		 */
+		string whatAmI();
+
+		/**
 		 * Prompt the user for all the Team Leader's attributes.
 		 * Was created for the console programs solely.
 		 * GUI can use the mutator separately to setup the Team Leader's attributes.
 		 */
 		bool consoleSetUpAll();
+
 };
 
 #endif //_TEAMLEADER_H

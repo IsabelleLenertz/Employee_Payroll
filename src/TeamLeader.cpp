@@ -72,6 +72,14 @@ double TeamLeader::pay() {
 }
 
 /**
+ * Returns "Team Leader"
+ */
+string TeamLeader::whatAmI()
+{
+	return "Team Leader";
+}
+
+/**
  * @return bool
  */
 bool TeamLeader::consoleSetUpAll() {

@@ -18,31 +18,58 @@ class ShiftSupervisor: public Employee {
 
 public:
     ShiftSupervisor();
+    ~ShiftSupervisor();
+    /**
+     * Exception class
+     */
+    class InvalidBonus{
+    };
+    class InvalidPay{
+    };
 
     /**
-     * @param int
+     * Changes the Annual Salary.
+     * The new salary cannot be a negative number
+     * Returns true to indicate success, false to indicate failure.
      */
     bool setAnnualSalary( int);
-
+    /**
+     * Returns the annual Salary
+     */
     int getAnnualSalary();
 
     /**
-     * @param int
+     * Changes the Annual Production Bonus.
+     * The new bonus cannot be a negative number
+     * Returns true to indicate success, false to indicate failure.
      */
     bool setAnnualProductionBonus( int);
-
+    /**
+     * Returns the annual production bonus
+     */
     int getAnnualProductionBonus();
 
     /**
-     * @param bool
+     * Use to indicate if the shift supervisor met his rqmts
      */
-    bool setGoalMeet( bool);
-
+    void setGoalMeet(bool);
+    /**
+     * Returns true if the shift supervisor met his rqmts.
+     */
     bool getGoalMeet();
 
-    virtual double pay() = 0;
+    /**
+     * The Shift Supervisor if paid his monthly salary + 1/12th of his production bonus if his goals were reached.
+     * Throws an exception if the annual salary or the bonus were not setup properly
+     */
+    double pay();
 
-    virtual bool consoleSetUpAll() = 0;
+    /**
+     * Returns "Production Worker"
+     */
+    string whatAmI();
+
+    bool consoleSetUpAll();
 
 private:
     int annualSalary;
