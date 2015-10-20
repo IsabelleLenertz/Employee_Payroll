@@ -16,37 +16,73 @@ using namespace std;
 
 class TeamLeader: public ProductionWorker {
 	private:
-		int monhtlyBonus;
+		int monthlyBonus;
 		int formationRqm;
 		int formationAttended;
 
 	public:
+		/*
+		 * Exception classes
+		 */
+		class InvalidFormationRqm{
+		};
+		class IvalidFormationAttended{
+		};
+		class InvalidMonthlyBonus{
+		};
 
+		/*
+		 * Defaults constructor
+		 * Sets the attributes to zero to signify that they were not initiated
+		 */
+		TeamLeader();
+		/*
+		 * Default destructor
+		 */
+		~TeamLeader();
 		/**
-		 * Accessor and mutator for this->monthlyBonus
+		 * Changes the Monthly Bonus.
+		 * The new bonus cannot be a negative number
+		 * Returns true to indicate success, false to indicate failure.
 		 */
 		bool setMonthlyBonus( int);
-		int getMonthlyBonus();
+		/**
+		 * Returns the monthly bonus
+		 */
+		const int getMonthlyBonus();
 
 		/**
-		 * Accessor and mutator for this->FormationRqm
+		 * Changes the Formation Requirement (number of hours).
+		 * The requirement cannot be a negative number
+		 * Returns true to indicate success, false to indicate failure.
 		 */
 		bool setFormationRqm( int);
-		int getFormationRqm();
+		/**
+		 * Returns the formation requirement
+		 */
+		const int getFormationRqm();
 
 		/**
-		 * Accessor and mutator for this->formationAttended
+		 * Changes the Formation attended (number of hours).
+		 * The formation attended cannot be a negative number
+		 * Returns true to indicate success, false to indicate failure.
 		 */
 		bool setFormationAttended( int);
-		int getFormationAttended();
-
 		/**
-		 * Check if the formation Rqm where meet, returns true if so
+		 * Returns the number of formation hours attended
 		 */
-		bool formationRqmMeet();
+		const int getFormationAttended();
 
 		/**
-		 * Pays the Team Leader
+		 * Returns true if the Team Leader meets the formation requirement
+		 * Returns false if the Team Leader does not meet the formation requirement
+		 */
+		const bool formationRqmMeet();
+
+		/**
+		 * Check if the Team Leader was properly initiated before calculating his pay.
+		 * Adds his monthly bonus to his hourly pay if the Team Leader meets the formation requirement.
+		 * Returns his total pay.
 		 */
 		double pay();
 

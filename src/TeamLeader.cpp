@@ -6,69 +6,148 @@
  */
 
 #include "TeamLeader.hpp"
+/*
+ * Default constructor
+ * Sets the attributes to zero to signify that they were not initiated
+ */
+TeamLeader::TeamLeader(){
+	// Sets the attributes to zero to signify that they were not initiated
+	this->formationAttended = 0;
+	this->formationRqm = 0;
+	this->monthlyBonus = 0;
+}
+TeamLeader::~TeamLeader(){
+	cout << "You are destroying a team leader."<< endl;
+}
+
 
 /**
- * TeamLeader implementation
+ * Changes the Monthly Bonus.
+ * The new bonus cannot be a negative number
+ * Returns true to indicate success, false to indicate failure.
  */
-
-
-/**
- * @param int
- * @return bool
- */
-bool TeamLeader::setMonthlyBonus( int) {
-    return false;
+bool TeamLeader::setMonthlyBonus(int newBonus) {
+	// The monthly bonus cannot be negative
+	if (newBonus <= 0){
+		// Changes the bonus
+		this->monthlyBonus = newBonus;
+		// Returns true to indicate success
+		return true;
+	}
+	// If the new bonus is not valid
+	else{
+		// Does not change the bonus and returns false to indicate failure
+		return false;
+	}
 }
 
 /**
- * @return int
+ * Returns the monthly bonus
  */
-int TeamLeader::getMonthlyBonus() {
-    return 0;
+const int TeamLeader::getMonthlyBonus() {
+    return this->monthlyBonus;
 }
 
 /**
- * @param int
- * @return bool
+ * Changes the Formation Requirement (number of hours).
+ * The requirement cannot be a negative number
+ * Returns true to indicate success, false to indicate failure.
  */
-bool TeamLeader::setFormationRqm( int) {
-    return false;
+bool TeamLeader::setFormationRqm(int newRqm) {
+	// The formation requirement cannot be negative
+	if (newRqm <= 0){
+		// Changes the bonus
+		this->formationRqm = newRqm;
+		// Returns true to indicate success
+		return true;
+	}
+	// If the formation requirement is not valid
+	else{
+		// Does not change the formation and returns false to indicate failure
+		return false;
+	}
 }
 
 /**
- * @return int
+ * Returns number of formation hours required
  */
-int TeamLeader::getFormationRqm() {
-    return 0;
+const int TeamLeader::getFormationRqm() {
+    return this->formationRqm;
 }
 
 /**
- * @param int
- * @return bool
+ * Changes the Formation attended (number of hours).
+ * The formation attended cannot be a negative number
+ * Returns true to indicate success, false to indicate failure.
  */
-bool TeamLeader::setFormationAttended( int) {
-    return false;
+bool TeamLeader::setFormationAttended(int formation) {
+	// The formation attended hours cannot be negative
+	if (formation <= 0){
+		// Changes the formation attended
+		this->formationAttended = formation;
+		// Returns true to indicate success
+		return true;
+	}
+	// If the new formation attended is not valid
+	else{
+		// Does not change the formation and returns false to indicate failure
+		return false;
+	}
 }
 
 /**
- * @return int
+ * Returns the number of formation hours attended
  */
-int TeamLeader::getFormationAttended() {
-    return 0;
+const int TeamLeader::getFormationAttended() {
+    return this->formationAttended;
 }
 
 /**
- * @return bool
+ * Returns true if the Team Leader meets the formation requirement
+ * Returns false if the Team Leader does not meet the formation requirement
  */
-bool TeamLeader::formationRqmMeet() {
-    return false;
+const bool TeamLeader::formationRqmMeet() {
+    // If the Team leader did not attended the required number of formation hours
+	if ( (this->formationAttended) < (this->formationRqm) ){
+    	return false;
+    }
+	//If the Team Leader attended the required number of formation hours
+    else{
+    	return true;
+    }
 }
 
 /**
- * @return double
+ * Check if the Team Leader was properly initiated before calculating his pay.
+ * Adds his monthly bonus to his hourly pay if the Team Leader meets the formation requirement.
+ * Returns his total pay.
+ *
  */
 double TeamLeader::pay() {
-    return 0.0;
+	double totalPay = this->ProductionWorker::pay();
+	// If the formation requirement was not properly initialized
+	if ( (this->formationRqm) == 0){
+		//throws an error class
+		throw InvalidFormationRqm();
+	}
+	// If the formation attended was not properly initialized
+	else if ( (this->formationAttended) == 0) {
+		//throws an error class
+		throw IvalidFormationAttended();
+	}
+	// If the monthly bonus was not properly initialized
+	else if( (this->monthlyBonus) == 0 ){
+		//throws an error class
+		throw InvalidMonthlyBonus();
+	}
+	//If the Team Leader met the formation requirements
+	else if ( (this->formationRqmMeet()) == true ){
+		// Adds his bonus to his salary.
+		totalPay += this->monthlyBonus;
+	}
+
+	// Returns the monthly salary.
+    return totalPay;
 }
 
 /**
