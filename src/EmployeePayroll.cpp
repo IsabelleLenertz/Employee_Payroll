@@ -136,6 +136,27 @@ void setUpProductionWorker(ProductionWorker *pProdWorker){
 
 }
 void setUpShiftSupervisor(ShiftSupervisor *pShiftSuper){
+	string userInput = "";
+
+	setUpEmployee(pShiftSuper);
+	while ( (pShiftSuper->setAnnualSalary( Utilities::inputInt("Annual Salary: ", 0, 200000, 200001)))  == false ){
+	}
+	while ( (pShiftSuper->setAnnualProductionBonus( Utilities::inputInt("Annual Production Bonus: ", 0, 200000, 200001)))  == false ){
+	}
+	while ( userInput != "yes" && userInput != "no") {
+		userInput = Utilities::inputString("Did (s)he meet their production goals (yes/no)? ", 2, 3);
+		userInput = Utilities::makeLowerCase(userInput);
+		if (userInput == "yes")
+		{
+			pShiftSuper->setGoalMeet(true);
+		}
+		else if(userInput == "no") {
+			pShiftSuper->setGoalMeet(false);
+		}
+	}
+
+
+
 
 }
 void setUpTeamLeader(){

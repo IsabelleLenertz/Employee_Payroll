@@ -22,7 +22,7 @@ ShiftSupervisor::~ShiftSupervisor(){
  */
 bool ShiftSupervisor::setAnnualSalary(int newSalary){
 	// The annual Salary cannot be negative
-	if (newSalary <= 0){
+	if (newSalary >= 0){
 		// Changes the salary
 		this->annualSalary = newSalary;
 		// Returns true to indicate success
@@ -49,7 +49,7 @@ int ShiftSupervisor::getAnnualSalary() {
  */
 bool ShiftSupervisor::setAnnualProductionBonus(int newBonus) {
 	// The annual production bonus cannot be negative
-	if (newBonus <= 0){
+	if (newBonus >= 0){
 		// Changes the production bonus
 		this->annualProductionBonus = newBonus;
 		// Returns true to indicate success
