@@ -18,7 +18,7 @@ using namespace std;
 int getUserChoice();
 void setUpEmployee(Employee *pEmployee);
 void setUpProductionWorker(ProductionWorker *pProdWorker);
-void setUpShiftSupervisor();
+void setUpShiftSupervisor(ShiftSupervisor *pShiftSuper);
 void setUpTeamLeader();
 
 int main() {
@@ -33,8 +33,8 @@ int main() {
 		userChoice = getUserChoice();
 		switch (userChoice){
 
-		// If the user choses to add production workers
-		case 1:
+		// If the user chooses to add production workers
+		case 1:{
 			// Asks for the number of production worker he wants to add
 			// does not allow to go over MAX_EMPLOYEE
 			int numberProdWorker = Utilities::inputInt("How many Production Workers do you want to add? ", 1, (MAX_EMPLOYEE-employeeCounter), 0) ;
@@ -44,6 +44,7 @@ int main() {
 				break;
 			}
 
+			// If the user confirms (s)he wants to enter Production Workers
 			else{
 				// Asks for the desired number of production workers
 				for (int i = 0; i < numberProdWorker; i++){
@@ -51,7 +52,7 @@ int main() {
 					ProductionWorker *pTempProdWorker = new ProductionWorker;
 					// Asks the user for all the information about the production worker.
 					setUpProductionWorker(pTempProdWorker);
-					// Updates the list of Employee.
+					// Updates the list of Employees.
 					pListOfEmployee[employeeCounter+i] = pTempProdWorker;
 				}
 				// Updates the counter of employee entered by the user.
@@ -59,7 +60,35 @@ int main() {
 			}
 			// Exists the switch
 			break;
+		}
+		// If the user chooses to add shift supervisors
+		case 2:{
+			// Asks for the number of shift supervisors he wants to add
+			// does not allow to go over MAX_EMPLOYEE
+			int numberShiftSupervisors = Utilities::inputInt("How many Shift Supervisors do you want to add? ", 1, (MAX_EMPLOYEE-employeeCounter), 0) ;
 
+			if (numberShiftSupervisors == 0){
+				// Exits the switch if the user enters 0.
+				break;
+			}
+
+			// If the user confirms (s)he wants to enter Production Workers
+			else{
+				// Asks for the desired number of production workers
+				for (int i = 0; i < numberShiftSupervisors; i++){
+					// Dynamically allocates a new production worker.
+					ShiftSupervisor *pTempShiftSuper = new ShiftSupervisor;
+					// Asks the user for all the information about the production worker.
+					setUpShiftSupervisor(pTempShiftSuper);
+					// Updates the list of Employees.
+					pListOfEmployee[employeeCounter+i] = pTempShiftSuper;
+				}
+				// Updates the counter of employee entered by the user.
+				employeeCounter += numberShiftSupervisors;
+			}
+			// Exists the switch
+			break;
+		}
 	}
 
 }
@@ -106,7 +135,7 @@ void setUpProductionWorker(ProductionWorker *pProdWorker){
 	}
 
 }
-void setUpShiftSupervisor(){
+void setUpShiftSupervisor(ShiftSupervisor *pShiftSuper){
 
 }
 void setUpTeamLeader(){
