@@ -54,7 +54,7 @@ public:
 
     /**
      * Sets the hourly pay rate of the Production Worker.
-     * has to be >0
+     * has to be >=0
      * return true to indicate success, false to indicate failure.
      */
     bool setPayRate( double);
@@ -65,7 +65,7 @@ public:
 
     /**
      * Changes the Production Worker hours worked
-     * Has to be >0
+     * Has to be >=0
      * returns true to indicate success, false to indicate failure.
      */
     bool setHoursWorked( double);

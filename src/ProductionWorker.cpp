@@ -62,12 +62,12 @@ Shift ProductionWorker::getShift() {
 
 /**
  * Sets the hourly pay rate of the Production Worker.
- * has to be >0
+ * has to be >=0
  * return true to indicate success, false to indicate failure.
  */
 bool ProductionWorker::setPayRate(double newPayrate) {
 	// If the pay rate was valid
-	if (newPayrate > 0){
+	if (newPayrate >= 0){
 		// Changes this->payRate
 		this->payRate = newPayrate;
 		// Returns true to indicate success
@@ -89,12 +89,12 @@ double ProductionWorker::getPayRate() {
 
 /**
  * Changes the Production Worker hours worked
- * Has to be >0
+ * Has to be >=0
  * returns true to indicate success, false to indicate failure.
  */
 bool ProductionWorker::setHoursWorked(double newHours) {
     // If the new hours are valid.
-	if (newHours > 0){
+	if (newHours >= 0){
     	// changes the hours worked
     	this->hoursWorked = newHours;
     	// return true to indicate success

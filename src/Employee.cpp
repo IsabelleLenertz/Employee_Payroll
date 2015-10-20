@@ -61,16 +61,17 @@ int Employee::getId() {
  */
 bool Employee::setName(string newName) {
 	// If the new name is not valid (ie 1 char or starting with " "
-	if ( (newName[0] = ' ') || (newName.length() == 1) ){
+	if ( (newName[0] == ' ') || (newName.length() == 1) ){
+		// Does not change this->name and returns false to indicate failure
+		return false;
+	}
+	// If the new name was  valid
+	else{
 		// Changes this->name
 		this->name = newName;
 		// Returns true to indicate success
 		return true;
-	}
-	// If the new name was not valid
-	else{
-		// Does not change this->name and returns false to indicate failure
-		return false;
+
 	}
 }
 
@@ -90,9 +91,10 @@ bool Employee::setDate(string newDate) {
 	// Tries to change the date
 	if ( this->hireDate.setDate(newDate) == true ){
 		// return true to indicate success;
+		return true;
     }
 	// If newDate was invalid
-	{
+	else {
 		// Returns false to indicate failure
 		return false;
 	}
