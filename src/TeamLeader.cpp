@@ -28,7 +28,7 @@ TeamLeader::~TeamLeader(){
  */
 bool TeamLeader::setMonthlyBonus(int newBonus) {
 	// The monthly bonus cannot be negative
-	if (newBonus <= 0){
+	if (newBonus >= 0){
 		// Changes the bonus
 		this->monthlyBonus = newBonus;
 		// Returns true to indicate success
@@ -55,7 +55,7 @@ const int TeamLeader::getMonthlyBonus() {
  */
 bool TeamLeader::setFormationRqm(int newRqm) {
 	// The formation requirement cannot be negative
-	if (newRqm <= 0){
+	if (newRqm >= 0){
 		// Changes the bonus
 		this->formationRqm = newRqm;
 		// Returns true to indicate success
@@ -82,7 +82,7 @@ const int TeamLeader::getFormationRqm() {
  */
 bool TeamLeader::setFormationAttended(int formation) {
 	// The formation attended hours cannot be negative
-	if (formation <= 0){
+	if (formation >= 0){
 		// Changes the formation attended
 		this->formationAttended = formation;
 		// Returns true to indicate success

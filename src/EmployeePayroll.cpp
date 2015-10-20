@@ -19,7 +19,7 @@ int getUserChoice();
 void setUpEmployee(Employee *pEmployee);
 void setUpProductionWorker(ProductionWorker *pProdWorker);
 void setUpShiftSupervisor(ShiftSupervisor *pShiftSuper);
-void setUpTeamLeader();
+void setUpTeamLeader(TeamLeader *pLeader);
 
 int main() {
 	const int MAX_EMPLOYEE = 100;
@@ -89,6 +89,59 @@ int main() {
 			// Exists the switch
 			break;
 		}
+		case 3: {
+			// Asks for the number of production worker he wants to add
+			// does not allow to go over MAX_EMPLOYEE
+			int numberTeamLeader = Utilities::inputInt("How many Team Leader do you want to add? ", 1, (MAX_EMPLOYEE-employeeCounter), 0) ;
+
+			// If the user wants to add 0 Team Leader.
+			if (numberTeamLeader == 0){
+				// Exits the switch if the user enters 0.
+				break;
+			}
+
+			// If the user confirms (s)he wants to enter team leaders
+			else{
+				// Asks for the desired number of team leaders
+				for (int i = 0; i < numberTeamLeader; i++){
+					// Dynamically allocates a new team leader.
+					TeamLeader *pTempLeader = new TeamLeader;
+					// Asks the user for all the information about the team leader.
+					setUpTeamLeader(pTempLeader);
+					// Updates the list of Employees.
+					pListOfEmployee[employeeCounter+i] = pTempLeader;
+				}
+				// Updates the counter of employee entered by the user.
+				employeeCounter += numberTeamLeader;
+			}
+			// Exists the switch
+			break;
+		}
+		case 4:{
+
+		}
+
+		case 9: {
+			// Make sure the user wants to exist the program
+			cout << "Are you sure you want to exit the program? " << endl;
+			cout << "This sofware does not save any data to the disk, the information about " << employeeCounter << " employees will be lost." << endl;
+			string userChoice = Utilities::inputString("answer(yes/no): ", 2, 3);
+			userChoice = Utilities::makeLowerCase(userChoice);
+
+			// if the user answers yes
+			if (userChoice == "yes"){
+				cout << "Thank you for using our product." << endl;
+				cout << "Have nice day." <<endl;
+				// Exists the program
+				return 0;
+			}
+			else if(userChoice == "no") {
+				cout << "That's a reasonable choice! "<< endl;
+				// Exists the switch, goes back to the bening of the while loop
+				break;
+			}
+
+		}
 	}
 
 }
@@ -139,13 +192,18 @@ void setUpShiftSupervisor(ShiftSupervisor *pShiftSuper){
 	string userInput = "";
 
 	setUpEmployee(pShiftSuper);
+	// Asks the user for the annual salary
 	while ( (pShiftSuper->setAnnualSalary( Utilities::inputInt("Annual Salary: ", 0, 200000, 200001)))  == false ){
 	}
+	// Asks the user for annual production bonus
 	while ( (pShiftSuper->setAnnualProductionBonus( Utilities::inputInt("Annual Production Bonus: ", 0, 200000, 200001)))  == false ){
 	}
+	// Asks the user if the production goal where meet
 	while ( userInput != "yes" && userInput != "no") {
+		// Inputs a string, and converts it to lower cases
 		userInput = Utilities::inputString("Did (s)he meet their production goals (yes/no)? ", 2, 3);
 		userInput = Utilities::makeLowerCase(userInput);
+		// Changes the goalMeet attribute according to the user response.
 		if (userInput == "yes")
 		{
 			pShiftSuper->setGoalMeet(true);
@@ -154,11 +212,17 @@ void setUpShiftSupervisor(ShiftSupervisor *pShiftSuper){
 			pShiftSuper->setGoalMeet(false);
 		}
 	}
-
-
-
-
 }
-void setUpTeamLeader(){
+void setUpTeamLeader(TeamLeader *pLeader){
+	setUpProductionWorker(pLeader);
+	// Asks the user for the monthly bonus
+	while ( (pLeader->setMonthlyBonus( Utilities::inputInt("Monthly Bonus: ", 0, 20000, 20001)))  == false ){
+	}
+	// Asks the user for the number of hours of formation required
+	while ( (pLeader->setFormationRqm( Utilities::inputInt("Minimum hours of formation required: ", 0, 744, 745)))  == false ){
+	}
+	// Asks the user for the number of hours of formation attended this month
+	while ( (pLeader->setFormationAttended( Utilities::inputInt("Hours of formation attended this month: ", 0, 744, 745)))  == false ){
+	}
 
 }
