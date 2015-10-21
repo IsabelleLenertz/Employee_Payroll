@@ -1,11 +1,23 @@
-//============================================================================
-// Name        : EmployeePayroll.cpp
-// Author      : Isabelle Delmas
-// Version     :
-// Copyright   : Your copyright notice
-// Description : Hello World in C++, Ansi-style
-//============================================================================
+//*****************
 
+//Project Name: Project #3: Chapter 15 Employees
+
+//Project Description: Employee, Production Worker, Shift Supervisor, Team leader classed.
+// Create a virtual pay function
+// Store Employees in a array
+// Catch exception from the pay function
+
+//Project Author: Lenertz Isabelle
+
+//Is this an extra credit Project:  No
+
+//Date completed: 10/21/2015
+
+//Operating system used: Windows 10
+
+//IDE Used:  Eclipse
+
+//*****************
 #include <iostream>
 #include <iomanip>
 #include "Utilities.hpp"

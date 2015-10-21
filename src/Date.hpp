@@ -1,16 +1,17 @@
 //*****************
 
-//Project Name: Project #1: Student and Date classes
+//Project Name: Project #3: Chapter 15 Employees
 
-//Project Description: implement a student class and a date class.
-//Use them the main() function, create a vector of student, display all the informations,
-//indicates the names of the oldest student.
+//Project Description: Employee, Production Worker, Shift Supervisor, Team leader classed.
+// Create a virtual pay function
+// Store Employees in a array
+// Catch exception from the pay function
 
 //Project Author: Lenertz Isabelle
 
 //Is this an extra credit Project:  No
 
-//Date completed: 09/18/2015
+//Date completed: 10/21/2015
 
 //Operating system used: Windows 10
 
