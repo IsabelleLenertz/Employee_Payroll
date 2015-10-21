@@ -10,6 +10,13 @@
 using namespace std;
 
 int main() {
-	cout << "" << endl; // prints 
+
+	while (userAnswer =! "han solo")
+	{
+		cout << "Who shot first? " << endl;
+
+	}
+	cout << "There is nothing in here!" << endl; // prints
+	cout << "You should better look at the v2 branch..." << endl;
 	return 0;
 }
