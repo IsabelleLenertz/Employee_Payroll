@@ -7,16 +7,19 @@
 //============================================================================
 
 #include <iostream>
+#include "Utilities.hpp"
 using namespace std;
 
 int main() {
 
-	while (userAnswer =! "han solo")
-	{
-		cout << "Who shot first? " << endl;
+	string userAnswer = "";
 
+	while (userAnswer != "han solo")
+	{
+		userAnswer = Utilities::inputString("Who shot first? ", 0, 20);
+		userAnswer = Utilities::makeLowerCase(userAnswer);
 	}
-	cout << "There is nothing in here!" << endl; // prints
-	cout << "You should better look at the v2 branch..." << endl;
+
+	cout << "There is nothing more in here, you should look in the v2 branch." << endl;
 	return 0;
 }
