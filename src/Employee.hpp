@@ -27,7 +27,7 @@ public:
      * Default destructor
      * Print a deleting message.
      */
-    ~Employee();
+    virtual ~Employee();
 
     /**
      * The Employee's Id has to be greater than 0.
@@ -38,7 +38,7 @@ public:
     /**
      * Return this->id
      */
-    int getId();
+    const int getId();
 
     /**
      * Changes the name if it does not start with a space and if greater than 1 character
@@ -49,7 +49,7 @@ public:
     /**
      * Returns the name.
      */
-    string getName();
+    const string getName();
 
     /**
      *	Sets up this->hireDate using the Date's setDate function.
@@ -59,15 +59,13 @@ public:
     /**
      * return the date as a usable string.
      */
-    string getDate();
+    const string getDate();
 
-    virtual double pay() = 0;
+    const virtual double pay() = 0;
     /**
      * Returns the type of employee in a string
      */
-    virtual string whatAmI() = 0;
-
-    virtual bool consoleSetUpAll() = 0;
+    const virtual string whatAmI() = 0;
 
 private:
     int id;

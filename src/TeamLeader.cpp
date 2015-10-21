@@ -17,7 +17,7 @@ TeamLeader::TeamLeader(){
 	this->monthlyBonus = 0;
 }
 TeamLeader::~TeamLeader(){
-	cout << "You are destroying a team leader."<< endl;
+	cout << "You are destroying a Team Leader."<< endl;
 }
 
 
@@ -123,17 +123,12 @@ const bool TeamLeader::formationRqmMeet() {
  * Returns his total pay.
  *
  */
-double TeamLeader::pay() {
+const double TeamLeader::pay() {
 	double totalPay = this->ProductionWorker::pay();
 	// If the formation requirement was not properly initialized
 	if ( (this->formationRqm) == 0){
 		//throws an error class
 		throw InvalidFormationRqm();
-	}
-	// If the formation attended was not properly initialized
-	else if ( (this->formationAttended) == 0) {
-		//throws an error class
-		throw IvalidFormationAttended();
 	}
 	// If the monthly bonus was not properly initialized
 	else if( (this->monthlyBonus) == 0 ){
@@ -153,14 +148,8 @@ double TeamLeader::pay() {
 /**
  * Returns "Team Leader"
  */
-string TeamLeader::whatAmI()
+const string TeamLeader::whatAmI()
 {
 	return "Team Leader";
 }
 
-/**
- * @return bool
- */
-bool TeamLeader::consoleSetUpAll() {
-    return false;
-}

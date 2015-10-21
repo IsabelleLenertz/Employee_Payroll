@@ -38,7 +38,7 @@ bool ShiftSupervisor::setAnnualSalary(int newSalary){
 /**
  * Returns the annual Salary
  */
-int ShiftSupervisor::getAnnualSalary() {
+const int ShiftSupervisor::getAnnualSalary() {
     return this->annualSalary;
 }
 
@@ -65,7 +65,7 @@ bool ShiftSupervisor::setAnnualProductionBonus(int newBonus) {
 /**
  * Returns the annual production bonus
  */
-int ShiftSupervisor::getAnnualProductionBonus() {
+const int ShiftSupervisor::getAnnualProductionBonus() {
     return this->annualProductionBonus;
 }
 
@@ -79,7 +79,7 @@ void ShiftSupervisor::setGoalMeet(bool flag) {
 /**
  * Returns true if the shift supervisor met his rqmts.
  */
-bool ShiftSupervisor::getGoalMeet() {
+const bool ShiftSupervisor::getGoalMeet() {
     return this->goalsMeet;
 }
 
@@ -87,9 +87,16 @@ bool ShiftSupervisor::getGoalMeet() {
  * The Shift Supervisor if paid his monthly salary + 1/12th of his production bonus if his goals were reached.
  * Throws an exception if the annual salary or the bonus were not setup properly
  */
-double ShiftSupervisor::pay() {
-    if (this->annualSalary == 0){
-    	throw InvalidPay();
+const double ShiftSupervisor::pay() {
+    // If the annual salary was no set up
+	if (this->annualSalary == 0){
+    	// Does not allow the shift supervisor to be paid.
+		throw InvalidPay();
+    }
+    // If the annual bonus was no set up
+    else if(this->annualProductionBonus == 0){
+    	// Does not allow the shift supervisor to be paid.
+    	throw InvalidBonus();
     }
     else{
     	if (this->goalsMeet == true){
@@ -105,14 +112,7 @@ double ShiftSupervisor::pay() {
 /**
  * Returns "Shift Supervisor"
  */
-string ShiftSupervisor::whatAmI()
+const string ShiftSupervisor::whatAmI()
 {
 	return "Shift Supervisor";
-}
-
-/**
- * @return bool
- */
-bool ShiftSupervisor::consoleSetUpAll() {
-    return false;
 }

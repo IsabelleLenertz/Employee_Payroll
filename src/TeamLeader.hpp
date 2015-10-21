@@ -39,7 +39,7 @@ class TeamLeader: public ProductionWorker {
 		/*
 		 * Default destructor
 		 */
-		~TeamLeader();
+		virtual ~TeamLeader();
 		/**
 		 * Changes the Monthly Bonus.
 		 * The new bonus cannot be a negative number
@@ -84,19 +84,13 @@ class TeamLeader: public ProductionWorker {
 		 * Adds his monthly bonus to his hourly pay if the Team Leader meets the formation requirement.
 		 * Returns his total pay.
 		 */
-		double pay();
+		const double pay();
 
 		/**
 		 * Returns "Team Leader"
 		 */
-		string whatAmI();
+		const string whatAmI();
 
-		/**
-		 * Prompt the user for all the Team Leader's attributes.
-		 * Was created for the console programs solely.
-		 * GUI can use the mutator separately to setup the Team Leader's attributes.
-		 */
-		bool consoleSetUpAll();
 
 };
 

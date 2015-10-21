@@ -7,6 +7,7 @@
 //============================================================================
 
 #include <iostream>
+#include <iomanip>
 #include "Utilities.hpp"
 #include "Employee.hpp"
 #include "ProductionWorker.hpp"
@@ -15,14 +16,34 @@
 
 using namespace std;
 
+/**
+ * Prints the menu and ask for the user choice
+ */
 int getUserChoice();
+
+/**
+ * Calls all the appropriate mutators for an Employee type.
+ * Sets all the attributes.
+ */
 void setUpEmployee(Employee *pEmployee);
 void setUpProductionWorker(ProductionWorker *pProdWorker);
 void setUpShiftSupervisor(ShiftSupervisor *pShiftSuper);
 void setUpTeamLeader(TeamLeader *pLeader);
 
+/**
+ * Goes through an array of employee and pays everyone.
+ */
+void payEveryone(Employee* employees[], int arraySize);
+
+/**
+ * Goes trough an array of dynamically allocated objects/variables and deletes them.
+ */
+template <typename T>
+void cleanUp(T *pArray[], int arraySize);
+
+
 int main() {
-	const int MAX_EMPLOYEE = 100;
+	const int MAX_EMPLOYEE = 10;
 	int employeeCounter = 0; // number of employee entered by the user.
 	int userChoice = 0; //use to store user's input.
 	Employee *pListOfEmployee[MAX_EMPLOYEE]; // stores pointer to the new Employees.
@@ -48,6 +69,7 @@ int main() {
 			else{
 				// Asks for the desired number of production workers
 				for (int i = 0; i < numberProdWorker; i++){
+					cout << "Production Worker #" << i+1 << ": " << endl;
 					// Dynamically allocates a new production worker.
 					ProductionWorker *pTempProdWorker = new ProductionWorker;
 					// Asks the user for all the information about the production worker.
@@ -76,6 +98,7 @@ int main() {
 			else{
 				// Asks for the desired number of production workers
 				for (int i = 0; i < numberShiftSupervisors; i++){
+					cout << "Shift Supervisor #" << i+1 << ": " << endl;
 					// Dynamically allocates a new production worker.
 					ShiftSupervisor *pTempShiftSuper = new ShiftSupervisor;
 					// Asks the user for all the information about the production worker.
@@ -92,7 +115,7 @@ int main() {
 		case 3: {
 			// Asks for the number of production worker he wants to add
 			// does not allow to go over MAX_EMPLOYEE
-			int numberTeamLeader = Utilities::inputInt("How many Team Leader do you want to add? ", 1, (MAX_EMPLOYEE-employeeCounter), 0) ;
+			int numberTeamLeader = Utilities::inputInt("How many Team Leaders do you want to add? ", 1, (MAX_EMPLOYEE-employeeCounter), 0) ;
 
 			// If the user wants to add 0 Team Leader.
 			if (numberTeamLeader == 0){
@@ -104,6 +127,7 @@ int main() {
 			else{
 				// Asks for the desired number of team leaders
 				for (int i = 0; i < numberTeamLeader; i++){
+					cout << "Team Leader #" << i+1 << ": " << endl;
 					// Dynamically allocates a new team leader.
 					TeamLeader *pTempLeader = new TeamLeader;
 					// Asks the user for all the information about the team leader.
@@ -118,7 +142,13 @@ int main() {
 			break;
 		}
 		case 4:{
-
+			if (employeeCounter == 0){
+				cout << "You don't have anyone to pay." << endl;
+			}
+			else{
+				payEveryone(pListOfEmployee, employeeCounter);
+			}
+			break;
 		}
 
 		case 9: {
@@ -133,6 +163,7 @@ int main() {
 				cout << "Thank you for using our product." << endl;
 				cout << "Have nice day." <<endl;
 				// Exists the program
+				cleanUp(pListOfEmployee, employeeCounter);
 				return 0;
 			}
 			else if(userChoice == "no") {
@@ -141,13 +172,26 @@ int main() {
 				break;
 			}
 
-		}
+		}// case 9
+		}// switch
+
+	}// while
+
+	// Indicates that the maximum number of employee has been reached.
+	if (employeeCounter == 0){
+		cout << "You don't have anyone to pay." << endl;
+	}
+	else{
+		cout << "You have reached the maximum number of employees." << endl;
+		cout << "This month's payroll: " << endl;
+		payEveryone(pListOfEmployee, employeeCounter);
 	}
 
-}
+	// Deletes all the dynamically allocated employees before exiting.
+	cleanUp(pListOfEmployee, employeeCounter);
 
 	return 0;
-}
+}// main
 
 int getUserChoice(){
 	// Prints the header
@@ -171,7 +215,7 @@ int getUserChoice(){
 
 void setUpEmployee(Employee *pEmployee){
 	while ( (pEmployee->setName( Utilities::inputString("Enter the name: ", 0, 15)))  == false  ){
-			cout << "A name cannot have less than one character and cannot start with a space." << endl;
+			cout << "A name needs more than one character and cannot start with a space." << endl;
 	}
 	while ( (pEmployee->setId( Utilities::inputInt("Enter the Id number: ", 0, 100000, 10001)))  == false ){
 	}
@@ -226,3 +270,71 @@ void setUpTeamLeader(TeamLeader *pLeader){
 	}
 
 }
+void payEveryone(Employee* employees[], int arraySize){
+
+	// Prints a header
+	cout << setw(15) << left << "ID Number";
+	cout << setw(15) << left << "Name";
+	cout << setw(30) << left << "Category";
+	cout << setw(15) << left << "Pay ($)";
+	cout << endl;
+
+	// Prints a separation line
+	for (int i=0; i<75; i++){
+		cout << "-";
+	}
+	cout << endl;
+
+	// Goes trough the array of Employee and prints the info
+	for (int i = 0; i < arraySize; i++) {
+		// Prints the ID
+		cout << setw(15) << employees[i]->getId();
+		// Prints the name
+		cout << setw(15) << employees[i]->getName();
+		// Prints the category
+		cout << setw(30) << employees[i]->whatAmI();
+		// Prints the monthly salary
+		try{
+			double pay = employees[i]->pay();
+			cout << setw(15) << fixed << setprecision(2) << pay;
+			cout << endl;
+		}
+		catch (ProductionWorker::InvalidShift &e){
+			cout << "Could not be paid. Shift not set."<< endl;
+		}
+		catch (ProductionWorker::InvalidPayRate &e){
+			cout << "Could not be paid. Invalid pay rate."<< endl;
+		}
+		catch (ProductionWorker::InvalidHoursWorked &e){
+			cout << "Could not be paid. Invalid number of hours." << endl;
+		}
+		catch (ShiftSupervisor::InvalidBonus &e){
+			cout << "Could not be paid. Bonus not valid." << endl;
+		}
+		catch (ShiftSupervisor::InvalidPay &e){
+			cout << "Could not be paid. Pay not valid." << endl;
+		}
+		catch (TeamLeader::InvalidFormationRqm &e){
+			cout << "Could not be paid. Invalid formation requirement." << endl;
+		}
+		catch (TeamLeader::InvalidMonthlyBonus &e){
+			cout << "Could not be paid. Invalid monthly bonus." << endl;
+		}
+	}// end of for
+
+	cout << endl << endl << endl;
+
+}// end pay()
+
+template <typename T>
+void cleanUp(T *pArray[], int arraySize)
+{
+	// Goes trough an array
+	for(int i = 0; i<arraySize; i++){
+		// Deletes every dynamicaly allocated objects
+		delete pArray[i];
+	}
+}
+
+
+

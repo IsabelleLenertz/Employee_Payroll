@@ -56,7 +56,7 @@ bool ProductionWorker::setShift(string newShift) {
 /**
  * Returns the shift the production worker is working, using the Shift enum datatype
  */
-Shift ProductionWorker::getShift() {
+const Shift ProductionWorker::getShift() {
     return this->shift;
 }
 
@@ -83,7 +83,7 @@ bool ProductionWorker::setPayRate(double newPayrate) {
 /**
  * Returns the Production Worker's pay rate.
  */
-double ProductionWorker::getPayRate() {
+const double ProductionWorker::getPayRate() {
     return this->payRate;
 }
 
@@ -110,7 +110,7 @@ bool ProductionWorker::setHoursWorked(double newHours) {
 /**
  * Returns the hours worked by the Production Worker
  */
-double ProductionWorker::getHoursWorked() {
+const double ProductionWorker::getHoursWorked() {
     return this->hoursWorked;
 }
 
@@ -119,7 +119,7 @@ double ProductionWorker::getHoursWorked() {
  * Pays night worker 50% bonus
  * throws the exceptions : InvalidHoursWorked, InvalidPayRate, InvalidShift if the attributes were not setup properly
  */
-double ProductionWorker::pay() {
+const double ProductionWorker::pay() {
 
 	// Throws an exception if this->hoursWorked is not setup properly
 	if (this->hoursWorked <= 0)
@@ -148,14 +148,8 @@ double ProductionWorker::pay() {
 /**
  * Returns "Production Worker"
  */
-string ProductionWorker::whatAmI()
+const string ProductionWorker::whatAmI()
 {
 	return "Production Worker";
 }
 
-/**
- * @return bool
- */
-bool ProductionWorker::consoleSetUpAll() {
-    return false;
-}

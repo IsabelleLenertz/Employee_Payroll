@@ -39,7 +39,7 @@ public:
      * Default destructor
      * Print a deleting message.
      */
-    ~ProductionWorker();
+    virtual ~ProductionWorker();
 
     /**
      * Changes the shift of the Employee
@@ -50,7 +50,7 @@ public:
     /**
      * Returns the shift the production worker is working, using the Shift enum datatype
      */
-    Shift getShift();
+    const Shift getShift();
 
     /**
      * Sets the hourly pay rate of the Production Worker.
@@ -61,7 +61,7 @@ public:
     /**
      * Returns the Production Worker's pay rate.
      */
-    double getPayRate();
+    const double getPayRate();
 
     /**
      * Changes the Production Worker hours worked
@@ -72,21 +72,19 @@ public:
     /**
      * Returns the hours worked by the Production Worker
      */
-    double getHoursWorked();
+    const double getHoursWorked();
 
     /**
      * Pays the Production worker hoursWorked * payRate.
      * Pays night worker 50% bonus
      * throws the exceptions : InvalidHoursWorked, InvalidPayRate, InvalidShift if the attributes were not setup properly
      */
-    double pay();
+    const double pay();
 
     /**
      * Returns "Production Worker"
      */
-    string whatAmI();
-
-    bool consoleSetUpAll();
+    const string whatAmI();
 
 private:
     Shift shift;

@@ -18,7 +18,7 @@ class ShiftSupervisor: public Employee {
 
 public:
     ShiftSupervisor();
-    ~ShiftSupervisor();
+    virtual ~ShiftSupervisor();
     /**
      * Exception class
      */
@@ -36,7 +36,7 @@ public:
     /**
      * Returns the annual Salary
      */
-    int getAnnualSalary();
+    const int getAnnualSalary();
 
     /**
      * Changes the Annual Production Bonus.
@@ -47,7 +47,7 @@ public:
     /**
      * Returns the annual production bonus
      */
-    int getAnnualProductionBonus();
+    const int getAnnualProductionBonus();
 
     /**
      * Use to indicate if the shift supervisor met his rqmts
@@ -56,20 +56,19 @@ public:
     /**
      * Returns true if the shift supervisor met his rqmts.
      */
-    bool getGoalMeet();
+    const bool getGoalMeet();
 
     /**
      * The Shift Supervisor if paid his monthly salary + 1/12th of his production bonus if his goals were reached.
      * Throws an exception if the annual salary or the bonus were not setup properly
      */
-    double pay();
+    const double pay();
 
     /**
      * Returns "Production Worker"
      */
-    string whatAmI();
+    const string whatAmI();
 
-    bool consoleSetUpAll();
 
 private:
     int annualSalary;

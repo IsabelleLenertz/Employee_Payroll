@@ -50,7 +50,7 @@ bool Employee::setId(int newId) {
 /**
  * Return this->id
  */
-int Employee::getId() {
+const int Employee::getId() {
     return this->id;
 }
 
@@ -78,7 +78,7 @@ bool Employee::setName(string newName) {
 /**
  * Returns the name.
  */
-string Employee::getName() {
+const string Employee::getName() {
     return this->name;
 }
 
@@ -103,17 +103,11 @@ bool Employee::setDate(string newDate) {
 /**
  * return the date as a usable string.
  */
-string Employee::getDate() {
+const string Employee::getDate() {
     return this->hireDate.getDate();
 }
 
 
 
 
-/**
- * @return bool
- */
- bool Employee::consoleSetUpAll() {
-    return false;
-}
 
