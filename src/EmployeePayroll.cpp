@@ -19,6 +19,7 @@
 
 //*****************
 #include <iostream>
+#include <stdio.h>
 #include <iomanip>
 #include "Utilities.hpp"
 #include "Employee.hpp"
@@ -54,24 +55,61 @@ void payEveryone(Employee* employees[], int arraySize);
 template <typename T>
 void cleanUp(T *pArray[], int arraySize);
 
+/**
+ * Prints an error message explaining what parameter the user should enter.
+ */
+void printError();
 
-int main() {
+
+int main(int argc, char* argv[]) {
+
 	const int MAX_EMPLOYEE = 10;
 	int employeeCounter = 0; // number of employee entered by the user.
+	int numberOfEmployees = 0; // number of employees entered using the command line, will be equal to argv[2]
+	int numberShiftSupervisors = 0;
+	int numberTeamLeader = 0;
+	int numberProdWorker = 0;
 	int userChoice = 0; //use to store user's input.
 	Employee *pListOfEmployee[MAX_EMPLOYEE]; // stores pointer to the new Employees.
 
+	 // Check for the number of parameters
+	if (argc > 3){
+		// Prints an error message explaining what parameter the user should enter.
+		printError();
+		return 0;
+	}
+	// If the user entered 3 parameters
+	else if (argc == 3){
+		// Converts the third parameter to an int
+		numberOfEmployees = atoi(argv[2]); // 0 if the third parameter was not an number, truncated is not an integer
+		cout << numberOfEmployees << endl;
+
+		// Check if the second parameter is valid
+		if ( (*argv[1] != 'P') && *argv[1] != 'T' && *argv[1] != 'S'){
+				printError();
+				return 0;
+		}
+		// Check if the third parameter is valid
+		else if (numberOfEmployees == 0){
+				printError();
+				return 0;
+		}
+	}
 	// Offers the user the opportunity to enter new employees as long as (s)he does not reach MAX_EMPLOYEE.
 	while (employeeCounter < MAX_EMPLOYEE){
 		// Displays the menu and asks for input.
-		userChoice = getUserChoice();
-		switch (userChoice){
+		//if (argc == 1){
+			userChoice = getUserChoice();
+		//}
+		//else if(){
 
+		//}
+		switch (userChoice){
 		// If the user chooses to add production workers
 		case 1:{
 			// Asks for the number of production worker he wants to add
 			// does not allow to go over MAX_EMPLOYEE
-			int numberProdWorker = Utilities::inputInt("How many Production Workers do you want to add? ", 1, (MAX_EMPLOYEE-employeeCounter), 0) ;
+			numberProdWorker = Utilities::inputInt("How many Production Workers do you want to add? ", 1, (MAX_EMPLOYEE-employeeCounter), 0) ;
 
 			if (numberProdWorker == 0){
 				// Exits the switch if the user enters 0.
@@ -100,7 +138,7 @@ int main() {
 		case 2:{
 			// Asks for the number of shift supervisors he wants to add
 			// does not allow to go over MAX_EMPLOYEE
-			int numberShiftSupervisors = Utilities::inputInt("How many Shift Supervisors do you want to add? ", 1, (MAX_EMPLOYEE-employeeCounter), 0) ;
+			numberShiftSupervisors = Utilities::inputInt("How many Shift Supervisors do you want to add? ", 1, (MAX_EMPLOYEE-employeeCounter), 0) ;
 
 			if (numberShiftSupervisors == 0){
 				// Exits the switch if the user enters 0.
@@ -128,7 +166,7 @@ int main() {
 		case 3: {
 			// Asks for the number of production worker he wants to add
 			// does not allow to go over MAX_EMPLOYEE
-			int numberTeamLeader = Utilities::inputInt("How many Team Leaders do you want to add? ", 1, (MAX_EMPLOYEE-employeeCounter), 0) ;
+			numberTeamLeader = Utilities::inputInt("How many Team Leaders do you want to add? ", 1, (MAX_EMPLOYEE-employeeCounter), 0) ;
 
 			// If the user wants to add 0 Team Leader.
 			if (numberTeamLeader == 0){
@@ -349,5 +387,15 @@ void cleanUp(T *pArray[], int arraySize)
 	}
 }
 
+/**
+ * Prints an error message explaining what parameter the user should enter.
+ */
+void printError()
+{
+	string error = "**Error** ";
+	cout << error << "Invalid number of arguments." << endl;
+	cout << error << "Format of command is: program_name employee-Type number-of-Employees"<< endl;
+
+}
 
 
