@@ -64,28 +64,28 @@ void printError();
 
 int main(int argc, char* argv[]) {
 
-	const int MAX_EMPLOYEE = 10;
 	int numberOfEmployees = 0; // number of employees entered using the command line, will be equal to argv[2]
 	int numberShiftSupervisors = 0;
 	int numberTeamLeader = 0;
 	int numberProdWorker = 0;
 	int userChoice = 0; //use to store user's input.
+	bool continueWhileLoop = true; // will be changed to false if the user entered command line parameters
 	vector<Employee *> pListOfEmployee; // stores pointer to the new Employees.
 
 	 // Check for the number of parameters
 	if (argc > 3){
-		// Prints an error message explaining what parameter the user should enter.
+		// Prints an error message explaining what parameters the user should enter.
 		printError();
 		return 0;
 	}
 	// If the user entered 3 parameters
 	else if (argc == 3){
-		// Converts the third parameter to an int
-		numberOfEmployees = atoi(argv[2]); // 0 if the third parameter was not an number, truncated is not an integer
+		// Converts the third parameter to an integer
+		numberOfEmployees = atoi(argv[2]); // 0 if the third parameter was not an number, truncated is not an integer or if something else follows an integer
 		cout << numberOfEmployees << endl;
 
 		// Check if the second parameter is valid
-		if ( (*argv[1] != 'P') && *argv[1] != 'T' && *argv[1] != 'S'){
+		if ( (*argv[1] != 'P') && (*argv[1] != 'T') && (*argv[1] != 'S') && (*argv[1] != 'p') && (*argv[1] != 't') && (*argv[1] != 's') ) {
 				printError();
 				return 0;
 		}
@@ -96,21 +96,45 @@ int main(int argc, char* argv[]) {
 		}
 	}
 	// Offers the user the opportunity to enter new employees as long as (s)he does not reach MAX_EMPLOYEE.
-	while (pListOfEmployee.size() < (unsigned int)MAX_EMPLOYEE){
+	while (continueWhileLoop == true){
 		// Displays the menu and asks for input.
-		//if (argc == 1){
+		if (argc == 1){
 			userChoice = getUserChoice();
-		//}
-		//else if(){
-
-		//}
+		}
+		// If the user choose to enter production workers
+		else if(*argv[1] == 'P'){
+			// Will exit the program after one while loop
+			continueWhileLoop = false;
+			// send the user to the section of the switch asking for the input of production workers
+			userChoice = 1;
+			// The program will not ask for a number of production worker to add, but will use the third parameter.
+			numberProdWorker = numberOfEmployees;
+		}
+		// If the user choose to enter shift supervisors
+		else if(*argv[1] == 'S'){
+			// Will exit the program after one while loop
+			continueWhileLoop = false;
+			// send the user to the section of the switch asking for the input of shift supervisors
+			userChoice = 2;
+			// The program will not ask for a number of production worker to add, but will use the third parameter.
+			numberProdWorker = numberOfEmployees;
+		}
+		// If the user choose to enter team leaders
+		else if(*argv[1] == 'T'){
+			// Will exit the program after one while loop
+			continueWhileLoop = false;
+			// send the user to the section of the switch asking for the input of team leaders
+			userChoice = 3;
+			// The program will not ask for a number of production worker to add, but will use the third parameter.
+			numberProdWorker = numberOfEmployees;
+		}
 		switch (userChoice){
 		// If the user chooses to add production workers
 		case 1:{
 			// Asks for the number of production worker he wants to add
-			// does not allow to go over MAX_EMPLOYEE
-			numberProdWorker = Utilities::inputInt("How many Production Workers do you want to add? ", 1, 10, 0) ;
-
+			if (argc == 1){
+				numberProdWorker = Utilities::inputInt("How many Production Workers do you want to add? ", 1, 10, 0) ;
+			}
 			if (numberProdWorker == 0){
 				// Exits the switch if the user enters 0.
 				break;
@@ -132,11 +156,11 @@ int main(int argc, char* argv[]) {
 			}
 			// Exists the switch
 			break;
-		}
+		}// end of case 1
+
 		// If the user chooses to add shift supervisors
 		case 2:{
 			// Asks for the number of shift supervisors he wants to add
-			// does not allow to go over MAX_EMPLOYEE
 			numberShiftSupervisors = Utilities::inputInt("How many Shift Supervisors do you want to add? ", 1, 10, 0) ;
 
 			if (numberShiftSupervisors == 0){
@@ -159,10 +183,11 @@ int main(int argc, char* argv[]) {
 			}
 			// Exists the switch
 			break;
-		}
+		}// end of case 2
+
+		// If the user chooses to enter Team Leaders
 		case 3: {
 			// Asks for the number of production worker he wants to add
-			// does not allow to go over MAX_EMPLOYEE
 			numberTeamLeader = Utilities::inputInt("How many Team Leaders do you want to add? ", 1, 10, 0) ;
 
 			// If the user wants to add 0 Team Leader.
@@ -182,25 +207,24 @@ int main(int argc, char* argv[]) {
 					setUpTeamLeader(pTempLeader);
 					// Updates the list of Employees.
 					pListOfEmployee.push_back(pTempLeader);
-				}
-			}
+				}// end of for
+			}// end of else
 			// Exists the switch
 			break;
-		}
-		case 4:{
-			if (pListOfEmployee.size() == 0){
-				cout << "You don't have anyone to pay." << endl;
-			}
-			else{
-				payEveryone(pListOfEmployee);
-			}
-			break;
-		}
+		}// end of case 3
 
+		// If the user chooses to pay everyone
+		case 4:{
+			// Pays all the employees and exists the switch
+			payEveryone(pListOfEmployee);
+			break;
+		} // end of case 4
+
+		//If tje user chooses to exit the program
 		case 9: {
 			// Make sure the user wants to exist the program
 			cout << "Are you sure you want to exit the program? " << endl;
-			cout << "This sofware does not save any data to the disk, the information about " << pListOfEmployee.size() << " employees will be lost." << endl;
+			cout << "This software does not save any data to the disk, the information about " << pListOfEmployee.size() << " employees will be lost." << endl;
 			string userChoice = Utilities::inputString("answer(yes/no): ", 2, 3);
 			userChoice = Utilities::makeLowerCase(userChoice);
 
@@ -218,11 +242,12 @@ int main(int argc, char* argv[]) {
 				break;
 			}
 
-		}// case 9
-		}// switch
+		}// end of case 9
+		}// end of switch
 
-	}// while
+	}// end of while
 
+	payEveryone(pListOfEmployee);
 	// Deletes all the dynamically allocated employees before exiting.
 	cleanUp(pListOfEmployee);
 
@@ -308,57 +333,63 @@ void setUpTeamLeader(TeamLeader *pLeader){
 }
 void payEveryone(vector<Employee *> employees){
 
-	// Prints a header
-	cout << setw(15) << left << "ID Number";
-	cout << setw(15) << left << "Name";
-	cout << setw(30) << left << "Category";
-	cout << setw(15) << left << "Pay ($)";
-	cout << endl;
+	if (employees.size() == 0){
+		cout << "You don't have anyone to pay." << endl;
+	}// end of if
+	else {
+		// Prints a header
+		cout << setw(15) << left << "ID Number";
+		cout << setw(15) << left << "Name";
+		cout << setw(30) << left << "Category";
+		cout << setw(15) << left << "Pay ($)";
+		cout << endl;
 
-	// Prints a separation line
-	for (int i=0; i<75; i++){
-		cout << "-";
-	}
-	cout << endl;
+		// Prints a separation line
+		for (int i=0; i<75; i++){
+			cout << "-";
+		}
+		cout << endl;
 
-	// Goes trough the vector of Employee and prints the info
-	for (int i = 0; (unsigned int)i < employees.size(); i++) {
-		// Prints the ID
-		cout << setw(15) << employees[i]->getId();
-		// Prints the name
-		cout << setw(15) << employees[i]->getName();
-		// Prints the category
-		cout << setw(30) << employees[i]->whatAmI();
-		// Prints the monthly salary
-		try{
-			double pay = employees[i]->pay();
-			cout << setw(15) << fixed << setprecision(2) << pay;
-			cout << endl;
-		}
-		catch (ProductionWorker::InvalidShift &e){
-			cout << "Could not be paid. Shift not set."<< endl;
-		}
-		catch (ProductionWorker::InvalidPayRate &e){
-			cout << "Could not be paid. Invalid pay rate."<< endl;
-		}
-		catch (ProductionWorker::InvalidHoursWorked &e){
-			cout << "Could not be paid. Invalid number of hours." << endl;
-		}
-		catch (ShiftSupervisor::InvalidBonus &e){
-			cout << "Could not be paid. Bonus not valid." << endl;
-		}
-		catch (ShiftSupervisor::InvalidPay &e){
-			cout << "Could not be paid. Pay not valid." << endl;
-		}
-		catch (TeamLeader::InvalidFormationRqm &e){
-			cout << "Could not be paid. Invalid formation requirement." << endl;
-		}
-		catch (TeamLeader::InvalidMonthlyBonus &e){
-			cout << "Could not be paid. Invalid monthly bonus." << endl;
-		}
-	}// end of for
+		// Goes trough the vector of Employee and prints the info
+		for (int i = 0; (unsigned int)i < employees.size(); i++) {
+			// Prints the ID
+			cout << setw(15) << employees[i]->getId();
+			// Prints the name
+			cout << setw(15) << employees[i]->getName();
+			// Prints the category
+			cout << setw(30) << employees[i]->whatAmI();
+			// Prints the monthly salary
+			try{
+				double pay = employees[i]->pay();
+				cout << setw(15) << fixed << setprecision(2) << pay;
+				cout << endl;
+			}
+			catch (ProductionWorker::InvalidShift &e){
+				cout << "Could not be paid. Shift not set."<< endl;
+			}
+			catch (ProductionWorker::InvalidPayRate &e){
+				cout << "Could not be paid. Invalid pay rate."<< endl;
+			}
+			catch (ProductionWorker::InvalidHoursWorked &e){
+				cout << "Could not be paid. Invalid number of hours." << endl;
+			}
+			catch (ShiftSupervisor::InvalidBonus &e){
+				cout << "Could not be paid. Bonus not valid." << endl;
+			}
+			catch (ShiftSupervisor::InvalidPay &e){
+				cout << "Could not be paid. Pay not valid." << endl;
+			}
+			catch (TeamLeader::InvalidFormationRqm &e){
+				cout << "Could not be paid. Invalid formation requirement." << endl;
+			}
+			catch (TeamLeader::InvalidMonthlyBonus &e){
+				cout << "Could not be paid. Invalid monthly bonus." << endl;
+			}
+		}// end of for
 
-	cout << endl << endl << endl;
+		cout << endl << endl << endl;
+	}// end of else
+
 
 }// end pay()
 
