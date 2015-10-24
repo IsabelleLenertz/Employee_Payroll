@@ -74,7 +74,7 @@ const int Employee::getId() {
  */
 bool Employee::setName(string newName) {
 	// If the new name is not valid (ie 1 char or starting with " "
-	if ( (newName[0] == ' ') || (newName.length() == 1) ){
+	if ( (newName[0] == ' ') || (newName.length() <= 1) ){
 		// Does not change this->name and returns false to indicate failure
 		return false;
 	}

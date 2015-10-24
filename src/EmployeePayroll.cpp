@@ -21,6 +21,7 @@
 #include <iostream>
 #include <stdio.h>
 #include <iomanip>
+#include <vector>
 #include "Utilities.hpp"
 #include "Employee.hpp"
 #include "ProductionWorker.hpp"
@@ -47,13 +48,13 @@ void setUpTeamLeader(TeamLeader *pLeader);
 /**
  * Goes through an array of employee and pays everyone.
  */
-void payEveryone(Employee* employees[], int arraySize);
+void payEveryone(vector<Employee *> employees);
 
 /**
  * Goes trough an array of dynamically allocated objects/variables and deletes them.
  */
 template <typename T>
-void cleanUp(T *pArray[], int arraySize);
+void cleanUp(vector<T *> pArray);
 
 /**
  * Prints an error message explaining what parameter the user should enter.
@@ -64,13 +65,12 @@ void printError();
 int main(int argc, char* argv[]) {
 
 	const int MAX_EMPLOYEE = 10;
-	int employeeCounter = 0; // number of employee entered by the user.
 	int numberOfEmployees = 0; // number of employees entered using the command line, will be equal to argv[2]
 	int numberShiftSupervisors = 0;
 	int numberTeamLeader = 0;
 	int numberProdWorker = 0;
 	int userChoice = 0; //use to store user's input.
-	Employee *pListOfEmployee[MAX_EMPLOYEE]; // stores pointer to the new Employees.
+	vector<Employee *> pListOfEmployee; // stores pointer to the new Employees.
 
 	 // Check for the number of parameters
 	if (argc > 3){
@@ -96,7 +96,7 @@ int main(int argc, char* argv[]) {
 		}
 	}
 	// Offers the user the opportunity to enter new employees as long as (s)he does not reach MAX_EMPLOYEE.
-	while (employeeCounter < MAX_EMPLOYEE){
+	while (pListOfEmployee.size() < (unsigned int)MAX_EMPLOYEE){
 		// Displays the menu and asks for input.
 		//if (argc == 1){
 			userChoice = getUserChoice();
@@ -109,7 +109,7 @@ int main(int argc, char* argv[]) {
 		case 1:{
 			// Asks for the number of production worker he wants to add
 			// does not allow to go over MAX_EMPLOYEE
-			numberProdWorker = Utilities::inputInt("How many Production Workers do you want to add? ", 1, (MAX_EMPLOYEE-employeeCounter), 0) ;
+			numberProdWorker = Utilities::inputInt("How many Production Workers do you want to add? ", 1, 10, 0) ;
 
 			if (numberProdWorker == 0){
 				// Exits the switch if the user enters 0.
@@ -126,10 +126,9 @@ int main(int argc, char* argv[]) {
 					// Asks the user for all the information about the production worker.
 					setUpProductionWorker(pTempProdWorker);
 					// Updates the list of Employees.
-					pListOfEmployee[employeeCounter+i] = pTempProdWorker;
+					pListOfEmployee.push_back(pTempProdWorker);
 				}
-				// Updates the counter of employee entered by the user.
-				employeeCounter += numberProdWorker;
+
 			}
 			// Exists the switch
 			break;
@@ -138,7 +137,7 @@ int main(int argc, char* argv[]) {
 		case 2:{
 			// Asks for the number of shift supervisors he wants to add
 			// does not allow to go over MAX_EMPLOYEE
-			numberShiftSupervisors = Utilities::inputInt("How many Shift Supervisors do you want to add? ", 1, (MAX_EMPLOYEE-employeeCounter), 0) ;
+			numberShiftSupervisors = Utilities::inputInt("How many Shift Supervisors do you want to add? ", 1, 10, 0) ;
 
 			if (numberShiftSupervisors == 0){
 				// Exits the switch if the user enters 0.
@@ -155,10 +154,8 @@ int main(int argc, char* argv[]) {
 					// Asks the user for all the information about the production worker.
 					setUpShiftSupervisor(pTempShiftSuper);
 					// Updates the list of Employees.
-					pListOfEmployee[employeeCounter+i] = pTempShiftSuper;
+					pListOfEmployee.push_back(pTempShiftSuper);
 				}
-				// Updates the counter of employee entered by the user.
-				employeeCounter += numberShiftSupervisors;
 			}
 			// Exists the switch
 			break;
@@ -166,7 +163,7 @@ int main(int argc, char* argv[]) {
 		case 3: {
 			// Asks for the number of production worker he wants to add
 			// does not allow to go over MAX_EMPLOYEE
-			numberTeamLeader = Utilities::inputInt("How many Team Leaders do you want to add? ", 1, (MAX_EMPLOYEE-employeeCounter), 0) ;
+			numberTeamLeader = Utilities::inputInt("How many Team Leaders do you want to add? ", 1, 10, 0) ;
 
 			// If the user wants to add 0 Team Leader.
 			if (numberTeamLeader == 0){
@@ -184,20 +181,18 @@ int main(int argc, char* argv[]) {
 					// Asks the user for all the information about the team leader.
 					setUpTeamLeader(pTempLeader);
 					// Updates the list of Employees.
-					pListOfEmployee[employeeCounter+i] = pTempLeader;
+					pListOfEmployee.push_back(pTempLeader);
 				}
-				// Updates the counter of employee entered by the user.
-				employeeCounter += numberTeamLeader;
 			}
 			// Exists the switch
 			break;
 		}
 		case 4:{
-			if (employeeCounter == 0){
+			if (pListOfEmployee.size() == 0){
 				cout << "You don't have anyone to pay." << endl;
 			}
 			else{
-				payEveryone(pListOfEmployee, employeeCounter);
+				payEveryone(pListOfEmployee);
 			}
 			break;
 		}
@@ -205,7 +200,7 @@ int main(int argc, char* argv[]) {
 		case 9: {
 			// Make sure the user wants to exist the program
 			cout << "Are you sure you want to exit the program? " << endl;
-			cout << "This sofware does not save any data to the disk, the information about " << employeeCounter << " employees will be lost." << endl;
+			cout << "This sofware does not save any data to the disk, the information about " << pListOfEmployee.size() << " employees will be lost." << endl;
 			string userChoice = Utilities::inputString("answer(yes/no): ", 2, 3);
 			userChoice = Utilities::makeLowerCase(userChoice);
 
@@ -214,12 +209,12 @@ int main(int argc, char* argv[]) {
 				cout << "Thank you for using our product." << endl;
 				cout << "Have nice day." <<endl;
 				// Exists the program
-				cleanUp(pListOfEmployee, employeeCounter);
+				cleanUp(pListOfEmployee);
 				return 0;
 			}
 			else if(userChoice == "no") {
 				cout << "That's a reasonable choice! "<< endl;
-				// Exists the switch, goes back to the bening of the while loop
+				// Exists the switch, goes back to the beginning of the while loop
 				break;
 			}
 
@@ -228,18 +223,8 @@ int main(int argc, char* argv[]) {
 
 	}// while
 
-	// Indicates that the maximum number of employee has been reached.
-	if (employeeCounter == 0){
-		cout << "You don't have anyone to pay." << endl;
-	}
-	else{
-		cout << "You have reached the maximum number of employees." << endl;
-		cout << "This month's payroll: " << endl;
-		payEveryone(pListOfEmployee, employeeCounter);
-	}
-
 	// Deletes all the dynamically allocated employees before exiting.
-	cleanUp(pListOfEmployee, employeeCounter);
+	cleanUp(pListOfEmployee);
 
 	return 0;
 }// main
@@ -321,7 +306,7 @@ void setUpTeamLeader(TeamLeader *pLeader){
 	}
 
 }
-void payEveryone(Employee* employees[], int arraySize){
+void payEveryone(vector<Employee *> employees){
 
 	// Prints a header
 	cout << setw(15) << left << "ID Number";
@@ -336,8 +321,8 @@ void payEveryone(Employee* employees[], int arraySize){
 	}
 	cout << endl;
 
-	// Goes trough the array of Employee and prints the info
-	for (int i = 0; i < arraySize; i++) {
+	// Goes trough the vector of Employee and prints the info
+	for (int i = 0; (unsigned int)i < employees.size(); i++) {
 		// Prints the ID
 		cout << setw(15) << employees[i]->getId();
 		// Prints the name
@@ -378,13 +363,14 @@ void payEveryone(Employee* employees[], int arraySize){
 }// end pay()
 
 template <typename T>
-void cleanUp(T *pArray[], int arraySize)
+void cleanUp(vector<T *> pArray)
 {
 	// Goes trough an array
-	for(int i = 0; i<arraySize; i++){
-		// Deletes every dynamicaly allocated objects
+	for(int i = 0; i < pArray.size(); i++){
+		// Deletes every dynamically allocated objects
 		delete pArray[i];
 	}
+	pArray.erase(pArray.begin(),pArray.end());
 }
 
 /**
