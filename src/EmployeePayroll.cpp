@@ -425,7 +425,8 @@ void printError()
 	cout << error << "Invalid number of arguments." << endl;
 	cout << error << "Format of command is: program_name employee-Type number-of-Employees"<< endl;
 	cout << error << "Employee type is a <P>roduction Worker, <T>eam Leader, <S>hift Supervisor" << endl;
-
+	cout << error << "Number of Employees is 1 - 100" << endl;
+	cout << error << "Example: EmployeePayroll P 10 // Will create 10 production workers" << endl;
 }
 
 
