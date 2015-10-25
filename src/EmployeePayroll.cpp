@@ -90,7 +90,7 @@ int main(int argc, char* argv[]) {
 				return 0;
 		}
 		// Check if the third parameter is valid
-		else if (numberOfEmployees == 0){
+		else if ( (numberOfEmployees < 1) || (numberOfEmployees > 100) ){
 				printError();
 				return 0;
 		}
@@ -102,7 +102,7 @@ int main(int argc, char* argv[]) {
 			userChoice = getUserChoice();
 		}
 		// If the user choose to enter production workers
-		else if(*argv[1] == 'P'){
+		else if( (*argv[1] == 'P') || (*argv[1] == 'p') ){
 			// Will exit the program after one while loop
 			continueWhileLoop = false;
 			// send the user to the section of the switch asking for the input of production workers
@@ -111,36 +111,38 @@ int main(int argc, char* argv[]) {
 			numberProdWorker = numberOfEmployees;
 		}
 		// If the user choose to enter shift supervisors
-		else if(*argv[1] == 'S'){
+		else if( (*argv[1] == 'S') || (*argv[1] == 's') ){
 			// Will exit the program after one while loop
 			continueWhileLoop = false;
 			// send the user to the section of the switch asking for the input of shift supervisors
 			userChoice = 2;
 			// The program will not ask for a number of production worker to add, but will use the third parameter.
-			numberProdWorker = numberOfEmployees;
+			numberShiftSupervisors = numberOfEmployees;
 		}
 		// If the user choose to enter team leaders
-		else if(*argv[1] == 'T'){
+		else if( (*argv[1] == 'T') || (*argv[1] == 't')){
 			// Will exit the program after one while loop
 			continueWhileLoop = false;
 			// send the user to the section of the switch asking for the input of team leaders
 			userChoice = 3;
 			// The program will not ask for a number of production worker to add, but will use the third parameter.
-			numberProdWorker = numberOfEmployees;
+			numberTeamLeader = numberOfEmployees;
 		}
 		switch (userChoice){
 		// If the user chooses to add production workers
 		case 1:{
-			// Asks for the number of production worker he wants to add
+			// If the user did not enter any parameter using command line.
 			if (argc == 1){
+				// Asks for the number of production worker he wants to add
 				numberProdWorker = Utilities::inputInt("How many Production Workers do you want to add? ", 1, 10, 0) ;
 			}
+			// If the user indicated he wants to enter 0 employees
 			if (numberProdWorker == 0){
 				// Exits the switch if the user enters 0.
 				break;
 			}
 
-			// If the user confirms (s)he wants to enter Production Workers
+			// If the user wants to enter more than 0 employees
 			else{
 				// Asks for the desired number of production workers
 				for (int i = 0; i < numberProdWorker; i++){
@@ -160,15 +162,19 @@ int main(int argc, char* argv[]) {
 
 		// If the user chooses to add shift supervisors
 		case 2:{
-			// Asks for the number of shift supervisors he wants to add
-			numberShiftSupervisors = Utilities::inputInt("How many Shift Supervisors do you want to add? ", 1, 10, 0) ;
-
+			// If the user did not enter any parameter using command line.
+			if (argc == 1)
+			{
+				// Asks for the number of shift supervisors he wants to add
+				numberShiftSupervisors = Utilities::inputInt("How many Shift Supervisors do you want to add? ", 1, 10, 0) ;
+			}
+			// If the user indicated he wants to enter 0 employees
 			if (numberShiftSupervisors == 0){
 				// Exits the switch if the user enters 0.
 				break;
 			}
 
-			// If the user confirms (s)he wants to enter Production Workers
+			// If the user wants to enter more than 0 employees
 			else{
 				// Asks for the desired number of production workers
 				for (int i = 0; i < numberShiftSupervisors; i++){
@@ -187,16 +193,17 @@ int main(int argc, char* argv[]) {
 
 		// If the user chooses to enter Team Leaders
 		case 3: {
-			// Asks for the number of production worker he wants to add
-			numberTeamLeader = Utilities::inputInt("How many Team Leaders do you want to add? ", 1, 10, 0) ;
-
+			// If the user did not enter any parameter using command line.
+			if (argc == 1){
+				// Asks for the number of production worker he wants to add
+				numberTeamLeader = Utilities::inputInt("How many Team Leaders do you want to add? ", 1, 10, 0) ;
+			}
 			// If the user wants to add 0 Team Leader.
 			if (numberTeamLeader == 0){
 				// Exits the switch if the user enters 0.
 				break;
 			}
-
-			// If the user confirms (s)he wants to enter team leaders
+			// If the user wants to enter more than 0 employees
 			else{
 				// Asks for the desired number of team leaders
 				for (int i = 0; i < numberTeamLeader; i++){
@@ -247,7 +254,11 @@ int main(int argc, char* argv[]) {
 
 	}// end of while
 
-	payEveryone(pListOfEmployee);
+	// If the user entered command line parameters
+	if(argc == 3){
+		// Pays all the employees before exiting
+		payEveryone(pListOfEmployee);
+	}
 	// Deletes all the dynamically allocated employees before exiting.
 	cleanUp(pListOfEmployee);
 
@@ -338,6 +349,7 @@ void payEveryone(vector<Employee *> employees){
 	}// end of if
 	else {
 		// Prints a header
+		cout << endl <<"This Month Pay Roll" << endl << endl;
 		cout << setw(15) << left << "ID Number";
 		cout << setw(15) << left << "Name";
 		cout << setw(30) << left << "Category";
@@ -412,6 +424,7 @@ void printError()
 	string error = "**Error** ";
 	cout << error << "Invalid number of arguments." << endl;
 	cout << error << "Format of command is: program_name employee-Type number-of-Employees"<< endl;
+	cout << error << "Employee type is a <P>roduction Worker, <T>eam Leader, <S>hift Supervisor" << endl;
 
 }
 
