@@ -1,17 +1,14 @@
 //*****************
 
-//Project Name: Project #3: Chapter 15 Employees
+//Project Name: Project #4: using main parameters
 
-//Project Description: Employee, Production Worker, Shift Supervisor, Team leader classed.
-// Create a virtual pay function
-// Store Employees in a array
-// Catch exception from the pay function
+//Project Description: change array to vector and allow user to uses main parameter to launch the program
 
 //Project Author: Lenertz Isabelle
 
 //Is this an extra credit Project:  No
 
-//Date completed: 10/21/2015
+//Date completed: 10/24/2015
 
 //Operating system used: Windows 10
 
