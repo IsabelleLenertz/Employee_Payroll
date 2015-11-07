@@ -24,6 +24,7 @@
 #include "ProductionWorker.hpp"
 #include "ShiftSupervisor.hpp"
 #include "TeamLeader.hpp"
+#include "EmployeeList.hpp"
 
 
 using namespace std;
@@ -59,6 +60,18 @@ void cleanUp(vector<T *> pArray);
 void printError();
 
 
+int main (void){
+	EmployeeList myList;
+	Employee *pGeorge = new ProductionWorker;
+	pGeorge->setName("George");
+
+	myList.appendNode(pGeorge);
+
+
+}// end of main
+
+//  main temporary commnted out to test the linked list class.
+/*
 int main(int argc, char* argv[]) {
 
 	int numberOfEmployees = 0; // number of employees entered using the command line, will be equal to argv[2]
@@ -261,6 +274,7 @@ int main(int argc, char* argv[]) {
 
 	return 0;
 }// main
+*/
 
 int getUserChoice(){
 	// Prints the header
