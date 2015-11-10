@@ -8,7 +8,7 @@
 #ifndef EMPLOYEELIST_HPP_
 #define EMPLOYEELIST_HPP_
 
-#include "Employee.cpp"
+#include "Employee.hpp"
 
 //
 // Linked list Node
