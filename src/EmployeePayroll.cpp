@@ -51,7 +51,7 @@ void payEveryone(vector<Employee *> employees);
 /**
  * Print a list of all the employees
  */
-void printReport(EmployeeList listOfEmployee);
+void printReport(EmployeeList &listOfEmployee);
 
 /**
  * Goes trough an array of dynamically allocated objects/variables and deletes them.
@@ -464,7 +464,7 @@ void printError()
 /**
  * Print a list of all the employees
  */
-void printReport(EmployeeList listOfEmployee){
+void printReport(EmployeeList &listOfEmployee){
 	string header = "Employee Listing";
 
 	// Prints a header
