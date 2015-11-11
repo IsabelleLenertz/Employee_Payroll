@@ -59,20 +59,22 @@ ListNode const EmployeeList::getCurrentPtr(void){
  * Deletes the entire list.
  */
 void EmployeeList::destroyList() {
-	ListNode *tempPtr;
+	ListNode *tempPtr, *nodePtr;
 
-	while (this->head != nullptr) {
+	nodePtr = this->head;
+	while (nodePtr != nullptr) {
 		// remembers address of the next node
-		tempPtr = this->head->next;
+		tempPtr = nodePtr->next;
 
-		// Destroys the boat of the current node
-		delete this->head->data;
+		// Destroys the employee of the current node
+		delete nodePtr->data;
 		// Destroys the current node
-		delete this->head;
+		delete nodePtr;
 
 		// set current pointer to the next node
-		this->head = tempPtr;
+		nodePtr = tempPtr;
 	}// while
+	this->head = nullptr;
 
 }
 

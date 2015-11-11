@@ -49,6 +49,11 @@ void setUpTeamLeader(TeamLeader *pLeader);
 void payEveryone(vector<Employee *> employees);
 
 /**
+ * Print a list of all the employees
+ */
+void printReport(EmployeeList listOfEmployee);
+
+/**
  * Goes trough an array of dynamically allocated objects/variables and deletes them.
  */
 template <typename T>
@@ -62,14 +67,26 @@ void printError();
 
 int main (void){
 	EmployeeList myList;
-	Employee *pGeorge = new ProductionWorker;
-	pGeorge->setName("George");
 
-	myList.appendNode(pGeorge);
+	Employee *ptempEmployee = new TeamLeader;
+	ptempEmployee->setId(1);
+	myList.appendNode(ptempEmployee);
 
-	Employee *pWilliam = new TeamLeader;
-	pGeorge->setName("Wiliam");
-	myList.appendNode(pWilliam);
+	ptempEmployee = new ProductionWorker;
+	ptempEmployee->setId(2);
+	myList.appendNode(ptempEmployee);
+
+	//Employee *ptempEmployee3 = new TeamLeader;
+	//ptempEmployee3->setId(3);
+	//myList.appendNode(ptempEmployee3);
+
+	/*for (int i = 0; i<5; i++){
+		Employee *ptempEmployee = new TeamLeader;
+		ptempEmployee->setId(i+1);
+		myList.appendNode(ptempEmployee);
+	}*/
+
+	printReport(myList);
 
 
 }// end of main
@@ -444,4 +461,20 @@ void printError()
 	cout << error << "Example: EmployeePayroll P 10 // Will create 10 production workers" << endl;
 }
 
+/**
+ * Print a list of all the employees
+ */
+void printReport(EmployeeList listOfEmployee){
+	string header = "Employee Listing";
+
+	// Prints a header
+	cout << header << endl;
+	for (int i = 0; (unsigned int)i<header.size(); i++){
+		cout << "=";
+	}
+	cout << endl;
+
+	cout << left << setw(7) << "ID" << " " <<  setw(30) << "Full Name" << " " << setw(22) << "Type" << " " << setw(10) << "Hire Date" << endl;
+	cout << "------- ------------------------------ ---------------------- ----------" << endl;
+}
 
