@@ -38,7 +38,39 @@ public:
 	ListNode const getCurrentPtr(void);
 
 	/**
-	void destroyList(ListNode *&aNode);
+	 * Deletes the entire list.
+	 */
+	void destroyList();
+
+	/**
+	 * Inserts an Employee in the lists at  position.
+	 */
+	bool insertAfterNode(Employee* NewEmployee, int position);
+
+	/**
+	 * Returns the size of the list.
+	 */
+	int getSize();
+
+	/**
+	 * Returns the position of a node
+	 * Returns 0 if the node was not found
+	 */
+	int findNode(int searchId);
+
+	/**
+	 * Reverse the order of the list. the first Employee becomes the last one.
+	 */
+	void reverseList();
+
+	/**
+	 * Deletes a node at a specific position (position >1)
+	 * returns true to signify success
+	 * returns false to signify the node was not find
+	 */
+	bool deleteNode(int position);
+
+	/**
 	void traverseList(ListNode *aNode);
 	// Returns true if the node was inserted properly
 	// Returns false if the position did not exists.

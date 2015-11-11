@@ -67,6 +67,10 @@ int main (void){
 
 	myList.appendNode(pGeorge);
 
+	Employee *pWilliam = new TeamLeader;
+	pGeorge->setName("Wiliam");
+	myList.appendNode(pWilliam);
+
 
 }// end of main
 
