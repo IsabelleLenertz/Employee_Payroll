@@ -73,6 +73,7 @@ public:
      * Throws an exception if the annual salary or the bonus were not setup properly
      */
     const double pay();
+    const double getBonus();
 
     /**
      * Returns "Production Worker"

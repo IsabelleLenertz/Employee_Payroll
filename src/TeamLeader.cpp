@@ -154,6 +154,28 @@ const double TeamLeader::pay() {
 	// Returns the monthly salary.
     return totalPay;
 }
+const double TeamLeader::getBonus(){
+	double bonus =0.0;
+
+	// If the formation requirement was not properly initialized
+	if ( (this->formationRqm) == 0){
+		//throws an error class
+		throw InvalidFormationRqm();
+	}
+	// If the monthly bonus was not properly initialized
+	else if( (this->monthlyBonus) == 0 ){
+		//throws an error class
+		throw InvalidMonthlyBonus();
+	}
+	//If the Team Leader met the formation requirements
+	else if ( (this->formationRqmMeet()) == true ){
+		// Adds his bonus to his salary.
+		bonus += this->monthlyBonus;
+	}
+
+	return bonus;
+}
+
 
 /**
  * Returns "Team Leader"

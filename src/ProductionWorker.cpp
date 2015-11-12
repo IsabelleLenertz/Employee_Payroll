@@ -155,6 +155,11 @@ const double ProductionWorker::pay() {
 	}
 }
 
+const double ProductionWorker::getBonus(){
+	return 0;
+}
+
+
 /**
  * Returns "Production Worker"
  */

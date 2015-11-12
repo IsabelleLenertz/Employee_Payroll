@@ -96,6 +96,7 @@ class TeamLeader: public ProductionWorker {
 		 * Returns his total pay.
 		 */
 		const double pay();
+		const double getBonus();
 
 		/**
 		 * Returns "Team Leader"

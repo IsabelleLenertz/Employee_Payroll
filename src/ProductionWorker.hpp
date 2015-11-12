@@ -90,6 +90,7 @@ public:
      * throws the exceptions : InvalidHoursWorked, InvalidPayRate, InvalidShift if the attributes were not setup properly
      */
     const double pay();
+    const double getBonus();
 
     /**
      * Returns "Production Worker"

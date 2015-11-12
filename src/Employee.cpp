@@ -29,6 +29,7 @@
 Employee::Employee() {
 	this->name =  " ";
 	this->id = 0;
+	this->comment = "";
 }
 
 /**
@@ -120,6 +121,12 @@ const string Employee::getDate() {
     return this->hireDate.getDate();
 }
 
+const string Employee::getComment(){
+	return this->comment;
+}
+const void Employee::setComment(string newComment){
+	this->comment = newComment;
+}
 
 
 

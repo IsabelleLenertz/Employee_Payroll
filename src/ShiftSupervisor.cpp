@@ -118,6 +118,21 @@ const double ShiftSupervisor::pay() {
     	}
     }
 }
+const double ShiftSupervisor::getBonus(){
+    // If the annual bonus was no set up
+    if(this->annualProductionBonus == 0){
+    	// Does not allow the shift supervisor to be paid.
+    	throw InvalidBonus();
+    }
+    else{
+    	if (this->goalsMeet == true){
+    		return ( (this->annualProductionBonus)/12.0 );
+    	}
+    	else{
+    		return 0;
+    	}
+    }
+}
 
 /**
  * Returns "Shift Supervisor"

@@ -46,12 +46,12 @@ void setUpTeamLeader(TeamLeader *pLeader);
 /**
  * Goes through an array of employee and pays everyone.
  */
-void payEveryone(vector<Employee *> employees);
+void payEveryone(EmployeeList & employees);
 
 /**
  * Print a list of all the employees
  */
-void printReport(EmployeeList &listOfEmployee);
+void printReport(EmployeeList & listOfEmployee);
 
 /**
  * Goes trough an array of dynamically allocated objects/variables and deletes them.
@@ -65,31 +65,6 @@ void cleanUp(vector<T *> pArray);
 void printError();
 
 
-int main (void){
-	EmployeeList myList;
-
-	Employee *ptempEmployee = new TeamLeader;
-	ptempEmployee->setId(1);
-	myList.appendNode(ptempEmployee);
-
-	ptempEmployee = new ProductionWorker;
-	ptempEmployee->setId(2);
-	myList.appendNode(ptempEmployee);
-
-
-	for (int i = 0; i<5; i++){
-		Employee *ptempEmployee = new TeamLeader;
-		ptempEmployee->setId(i+1);
-		myList.appendNode(ptempEmployee);
-	}
-
-	printReport(myList);
-return 0;
-
-}// end of main
-
-//  main temporary commnted out to test the linked list class.
-/*
 int main(int argc, char* argv[]) {
 
 	int numberOfEmployees = 0; // number of employees entered using the command line, will be equal to argv[2]
@@ -98,7 +73,8 @@ int main(int argc, char* argv[]) {
 	int numberProdWorker = 0;
 	int userChoice = 0; //use to store user's input.
 	bool continueWhileLoop = true; // will be changed to false if the user entered command line parameters
-	vector<Employee *> pListOfEmployee; // stores pointer to the new Employees.
+	EmployeeList pListOfEmployee;
+	//vector<Employee *> pListOfEmployee; // stores pointer to the new Employees.
 
 	 // Check for the number of parameters
 	if (argc > 3){
@@ -180,7 +156,8 @@ int main(int argc, char* argv[]) {
 					// Asks the user for all the information about the production worker.
 					setUpProductionWorker(pTempProdWorker);
 					// Updates the list of Employees.
-					pListOfEmployee.push_back(pTempProdWorker);
+					pListOfEmployee.appendNode(pTempProdWorker);
+					//pListOfEmployee.push_back(pTempProdWorker);
 				}
 
 			}
@@ -212,7 +189,8 @@ int main(int argc, char* argv[]) {
 					// Asks the user for all the information about the production worker.
 					setUpShiftSupervisor(pTempShiftSuper);
 					// Updates the list of Employees.
-					pListOfEmployee.push_back(pTempShiftSuper);
+					pListOfEmployee.appendNode(pTempShiftSuper);
+					//pListOfEmployee.push_back(pTempShiftSuper);
 				}
 			}
 			// Exists the switch
@@ -241,7 +219,8 @@ int main(int argc, char* argv[]) {
 					// Asks the user for all the information about the team leader.
 					setUpTeamLeader(pTempLeader);
 					// Updates the list of Employees.
-					pListOfEmployee.push_back(pTempLeader);
+					pListOfEmployee.appendNode(pTempLeader);
+					//pListOfEmployee.push_back(pTempLeader);
 				}// end of for
 			}// end of else
 			// Exists the switch
@@ -255,11 +234,17 @@ int main(int argc, char* argv[]) {
 			break;
 		} // end of case 4
 
-		//If tje user chooses to exit the program
+		// If the user choses to print a report
+		case 5:{
+			// Prints a report
+			printReport(pListOfEmployee);
+			break;
+		}
+		//If the user chooses to exit the program
 		case 9: {
 			// Make sure the user wants to exist the program
 			cout << "Are you sure you want to exit the program? " << endl;
-			cout << "This software does not save any data to the disk, the information about " << pListOfEmployee.size() << " employees will be lost." << endl;
+			cout << "This software does not save any data to the disk, the information about " << pListOfEmployee.getSize() << " employees will be lost." << endl;
 			string userChoice = Utilities::inputString("answer(yes/no): ", 2, 3);
 			userChoice = Utilities::makeLowerCase(userChoice);
 
@@ -268,7 +253,7 @@ int main(int argc, char* argv[]) {
 				cout << "Thank you for using our product." << endl;
 				cout << "Have nice day." <<endl;
 				// Exists the program
-				cleanUp(pListOfEmployee);
+				pListOfEmployee.destroyList();
 				return 0;
 			}
 			else if(userChoice == "no") {
@@ -288,11 +273,11 @@ int main(int argc, char* argv[]) {
 		payEveryone(pListOfEmployee);
 	}
 	// Deletes all the dynamically allocated employees before exiting.
-	cleanUp(pListOfEmployee);
+	pListOfEmployee.destroyList();
 
 	return 0;
 }// main
-*/
+
 
 int getUserChoice(){
 	// Prints the header
@@ -308,10 +293,11 @@ int getUserChoice(){
 	cout << "2. Enter Shift Supervisor Information" << endl;
 	cout << "3. Enter Team Leader Information" << endl;
 	cout << "4. Pay Everyone" << endl;
+	cout << "5. Print Report" << endl;
 	cout << "9. Exit Program" << endl;
 
 	//Asks the used for input and returns it
-	return Utilities::inputInt("Please enter a menu option :", 1, 4, 9);
+	return Utilities::inputInt("Please enter a menu option :", 1, 5, 9);
 }
 
 void setUpEmployee(Employee *pEmployee){
@@ -371,9 +357,12 @@ void setUpTeamLeader(TeamLeader *pLeader){
 	}
 
 }
-void payEveryone(vector<Employee *> employees){
+void payEveryone(EmployeeList& employees){
 
-	if (employees.size() == 0){
+	Employee * currentEmployee = nullptr;
+	int sizeOfList = employees.getSize();
+
+	if (employees.getSize() == 0){
 		cout << "You don't have anyone to pay." << endl;
 	}// end of if
 	else {
@@ -382,50 +371,83 @@ void payEveryone(vector<Employee *> employees){
 		cout << setw(15) << left << "ID Number";
 		cout << setw(15) << left << "Name";
 		cout << setw(30) << left << "Category";
-		cout << setw(15) << left << "Pay ($)";
+		cout << setw(15) << left << "Total Pay ($)";
+		cout << setw(15) << left << "Bonus ($)";
+		cout << setw(30) << left << "Comments";
 		cout << endl;
 
 		// Prints a separation line
-		for (int i=0; i<75; i++){
+		for (int i=0; i<120; i++){
 			cout << "-";
 		}
 		cout << endl;
 
-		// Goes trough the vector of Employee and prints the info
-		for (int i = 0; (unsigned int)i < employees.size(); i++) {
-			// Prints the ID
-			cout << setw(15) << employees[i]->getId();
-			// Prints the name
-			cout << setw(15) << employees[i]->getName();
-			// Prints the category
-			cout << setw(30) << employees[i]->whatAmI();
-			// Prints the monthly salary
-			try{
-				double pay = employees[i]->pay();
-				cout << setw(15) << fixed << setprecision(2) << pay;
-				cout << endl;
+		// Goes trough the liked list of Employee and prints the info
+		for (int i = 1; i <= sizeOfList; i++) {
+			//sets the current point
+			if (employees.positionTo(i) == true ){
+				currentEmployee = employees.getCurrentPtr();
+				// Prints the ID
+				cout << setw(15) << currentEmployee->getId();
+				// Prints the name
+				cout << setw(15) << currentEmployee->getName();
+				// Prints the category
+				cout << setw(30) << currentEmployee->whatAmI();
+				// Prints the monthly salary
+				try{
+					double pay = currentEmployee->pay();
+					cout << setw(15) << fixed << setprecision(2) << pay;
+				}
+				catch (ProductionWorker::InvalidShift &e){
+					cout << "Could not be paid. Shift not set.";
+				}
+				catch (ProductionWorker::InvalidPayRate &e){
+					cout << "Could not be paid. Invalid pay rate.";
+				}
+				catch (ProductionWorker::InvalidHoursWorked &e){
+					cout << "Could not be paid. Invalid number of hours.";
+				}
+				catch (ShiftSupervisor::InvalidBonus &e){
+					cout << "Could not be paid. Bonus not valid.";
+				}
+				catch (ShiftSupervisor::InvalidPay &e){
+					cout << "Could not be paid. Pay not valid.";
+				}
+				catch (TeamLeader::InvalidFormationRqm &e){
+					cout << "Could not be paid. Invalid formation requirement.";
+				}
+				catch (TeamLeader::InvalidMonthlyBonus &e){
+					cout << "Could not be paid. Invalid monthly bonus.";
+				}
+				try{
+					double bonus = currentEmployee->getBonus();
+					cout << setw(15) << fixed << setprecision(2) << bonus;
+					cout << endl;
+				}
+				catch (ProductionWorker::InvalidShift &e){
+					cout << "Could not be paid. Shift not set."<< endl;
+				}
+				catch (ProductionWorker::InvalidPayRate &e){
+					cout << "Could not be paid. Invalid pay rate."<< endl;
+				}
+				catch (ProductionWorker::InvalidHoursWorked &e){
+					cout << "Could not be paid. Invalid number of hours." << endl;
+				}
+				catch (ShiftSupervisor::InvalidBonus &e){
+					cout << "Could not be paid. Bonus not valid." << endl;
+				}
+				catch (ShiftSupervisor::InvalidPay &e){
+					cout << "Could not be paid. Pay not valid." << endl;
+				}
+				catch (TeamLeader::InvalidFormationRqm &e){
+					cout << "Could not be paid. Invalid formation requirement." << endl;
+				}
+				catch (TeamLeader::InvalidMonthlyBonus &e){
+					cout << "Could not be paid. Invalid monthly bonus." << endl;
+				}
+				cout << setw(30) << currentEmployee->getComment();
 			}
-			catch (ProductionWorker::InvalidShift &e){
-				cout << "Could not be paid. Shift not set."<< endl;
-			}
-			catch (ProductionWorker::InvalidPayRate &e){
-				cout << "Could not be paid. Invalid pay rate."<< endl;
-			}
-			catch (ProductionWorker::InvalidHoursWorked &e){
-				cout << "Could not be paid. Invalid number of hours." << endl;
-			}
-			catch (ShiftSupervisor::InvalidBonus &e){
-				cout << "Could not be paid. Bonus not valid." << endl;
-			}
-			catch (ShiftSupervisor::InvalidPay &e){
-				cout << "Could not be paid. Pay not valid." << endl;
-			}
-			catch (TeamLeader::InvalidFormationRqm &e){
-				cout << "Could not be paid. Invalid formation requirement." << endl;
-			}
-			catch (TeamLeader::InvalidMonthlyBonus &e){
-				cout << "Could not be paid. Invalid monthly bonus." << endl;
-			}
+
 		}// end of for
 
 		cout << endl << endl << endl;
@@ -463,15 +485,37 @@ void printError()
  */
 void printReport(EmployeeList &listOfEmployee){
 	string header = "Employee Listing";
+	int listSize = listOfEmployee.getSize();
+	Employee * ptempEmployee = nullptr;
+	if (listSize != 0){
+		// Prints a header
+			cout << header << endl;
+			for (int i = 0; (unsigned int)i<header.size(); i++){
+				cout << "=";
+			}
+			cout << endl;
 
-	// Prints a header
-	cout << header << endl;
-	for (int i = 0; (unsigned int)i<header.size(); i++){
-		cout << "=";
+			cout << left << setw(7) << "ID" << " " <<  setw(30) << "Full Name" << " " << setw(22) << "Type" << " " << setw(10) << "Hire Date" << endl;
+			cout << "------- ------------------------------ ---------------------- ----------" << endl;
+
+			// goes through the list
+			for (int i = 0; i < listSize; i++){
+				if ( listOfEmployee.positionTo(i+1) == true ){
+					ptempEmployee = listOfEmployee.getCurrentPtr();
+					cout << left << setw(7) << ptempEmployee->getId() << " ";
+					cout << left << setw(30) << ptempEmployee->getName() << " ";
+					cout << left << setw(22) << ptempEmployee->whatAmI() << " ";
+					cout << left << setw(10) << ptempEmployee->getDate() << " " << endl;
+				}
+				else{
+					cout << "Something went wrong i = " << i << endl;
+				}
+
+			}
+	}// end of if
+	else{
+		cout << "You don't have any employees saved. No reports to print." << endl;
 	}
-	cout << endl;
 
-	cout << left << setw(7) << "ID" << " " <<  setw(30) << "Full Name" << " " << setw(22) << "Type" << " " << setw(10) << "Hire Date" << endl;
-	cout << "------- ------------------------------ ---------------------- ----------" << endl;
 }
 

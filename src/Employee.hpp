@@ -75,15 +75,23 @@ public:
     const string getDate();
 
     const virtual double pay() = 0;
+    const virtual double getBonus() = 0;
     /**
      * Returns the type of employee in a string
      */
     const virtual string whatAmI() = 0;
 
+    const string getComment();
+
+    const void setComment(string newComment);
+
+
+
 private:
     int id;
     string name;
     Date hireDate;
+    string comment;
 };
 
 #endif
