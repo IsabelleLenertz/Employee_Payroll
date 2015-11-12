@@ -235,7 +235,7 @@ int main(int argc, char* argv[]) {
 			break;
 		} // end of case 4
 
-		// If the user choses to print a report
+		// If the user chooses to print a report
 		case 5:{
 			// Prints a report
 			printReport(pListOfEmployee);
