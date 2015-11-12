@@ -20,7 +20,7 @@ struct ListNode {
 class EmployeeList {
 private:
 	ListNode *head;
-	ListNode *currentPtr;
+	Employee *currentPtr;
 
 public:
 	EmployeeList();
@@ -35,7 +35,7 @@ public:
 	/**
 	 * Returns the list node pointed by the currentPtr
 	 */
-	ListNode const getCurrentPtr(void);
+	Employee* const getCurrentPtr(void);
 
 	/**
 	 * Deletes the entire list.
@@ -43,9 +43,14 @@ public:
 	void destroyList();
 
 	/**
-	 * Inserts an Employee in the lists at  position.
+	 * Inserts an Employee in the lists before a specific position.
 	 */
 	bool insertAfterNode(Employee* NewEmployee, int position);
+
+	/**
+	 * Inserts an Employee in the lists before a specific position.
+	 */
+	bool insertBeforeNode(Employee* NewEmployee, int position);
 
 	/**
 	 * Returns the size of the list.
@@ -71,21 +76,14 @@ public:
 	bool deleteNode(int position);
 
 	/**
-	void traverseList(ListNode *aNode);
-	// Returns true if the node was inserted properly
-	// Returns false if the position did not exists.
-	bool insertNode(ListNode *&, Employee*, int);
-	// Returns the size of the list.
-	int getSize(ListNode *aNode);
-	// Returns the position of a node
-	int findNode(ListNode *aNode, double searchWeight);
-	// Reverse the list
-	void  reverseList(ListNode * &headPtr);
-	// Deletes a node at a specific position (position >1)
-	// returns true to signify success
-	// returns false to signify the node was not find.
-	bool deleteNode(ListNode *&aNode, int position);
-	*/
+	 * Position the currentPtr to a specific position
+	 * return true to indicate success
+	 * Return false if the position did not exist
+	 */
+	bool positionTo(int position);
+
+
+
 };
 
 #endif /* EMPLOYEELIST_HPP_ */

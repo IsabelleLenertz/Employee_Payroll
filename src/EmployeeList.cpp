@@ -9,7 +9,7 @@
 
 EmployeeList::EmployeeList() {
 	this->head = nullptr;
-	this->currentPtr = this->head;
+	this->currentPtr = nullptr;
 }
 
 EmployeeList::~EmployeeList() {
@@ -51,8 +51,8 @@ void EmployeeList::appendNode(Employee* newEmployeePtr){
 /**
  * Returns the list node pointed by the currentPtr
  */
-ListNode const EmployeeList::getCurrentPtr(void){
-	return *(this->currentPtr);
+Employee* const EmployeeList::getCurrentPtr(void){
+	return this->currentPtr;
 }
 
 /**
@@ -79,7 +79,7 @@ void EmployeeList::destroyList() {
 }
 
 /**
- * Inserts an Employee in the lists at  position.
+ * Inserts an Employee in the lists after a specific position.
  */
 bool EmployeeList::insertAfterNode(Employee* NewEmployee, int position){
 
@@ -121,6 +121,53 @@ bool EmployeeList::insertAfterNode(Employee* NewEmployee, int position){
 		this->head = newNode;
 	}
 	return true;
+}// end of insertNode
+
+
+/**
+ * Inserts an Employee in the lists before a specific position.
+ */
+bool EmployeeList::insertBeforeNode(Employee* NewEmployee, int position){
+
+	// temporary pointer to a node
+	ListNode *tempptr = this->head;
+	ListNode *ptrbefore;
+
+	// Check if the list is empty
+	if (this->head == nullptr){
+		return false;
+	}
+
+	// Goes through the list and make sure the position the user wants to insert a node to exists.
+	// Return false if the position does not exist.
+	if (position == 1){
+		ListNode *newNode = new ListNode;
+		tempptr = this->head;
+		newNode->data = NewEmployee;
+		newNode->next = tempptr;
+		this->head = newNode;
+	}//end of if
+	else{
+		// goes to the position indicated by the user. ptrbefore keeps track of the node before the position indicated by the user
+		for (int i=0; i < (position-1); i++ ) {
+			// check if we do not reach the end of list
+			if (tempptr->next == nullptr){
+				return false;
+			}
+			else{
+				ptrbefore = tempptr; // saves the previous node
+				tempptr = tempptr->next; // moves on to the next node
+			}
+		} // end of for
+		// Adds a node between ptrbefore and tempptr
+		ListNode *newNode = new ListNode;
+		newNode->data = NewEmployee;
+		newNode->next = tempptr;
+		ptrbefore->next = newNode;
+	}
+	// indicates success
+	return true;
+
 }// end of insertNode
 
 /**
@@ -259,4 +306,33 @@ bool EmployeeList::deleteNode(int position){
 	// signifies the node was properly deleted.
 	return true;
 
+}
+
+/**
+ * Position the currentPtr to a specific position
+ * return true to indicate success
+ * Return false if the position did not exist
+ */
+bool EmployeeList::positionTo(int position){
+	// the position counter cannot keep track of number greater than 32768
+	if (position > 32768){
+		return false;
+	}
+
+	ListNode *tempptr = this->head;
+	for (int i=1; i < position; i++){
+		// if the position does not exist
+		if (tempptr->next == nullptr){
+			// indicates failure.
+			return false;
+		}
+		else{
+			// goes to the next node
+			tempptr = tempptr->next;
+		}
+	}
+	// sets the current pointer to the Employee asked by the user
+	this->currentPtr = tempptr->data;
+	// indicates success.
+	return true;
 }

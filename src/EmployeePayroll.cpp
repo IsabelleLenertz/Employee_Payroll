@@ -76,18 +76,15 @@ int main (void){
 	ptempEmployee->setId(2);
 	myList.appendNode(ptempEmployee);
 
-	//Employee *ptempEmployee3 = new TeamLeader;
-	//ptempEmployee3->setId(3);
-	//myList.appendNode(ptempEmployee3);
 
-	/*for (int i = 0; i<5; i++){
+	for (int i = 0; i<5; i++){
 		Employee *ptempEmployee = new TeamLeader;
 		ptempEmployee->setId(i+1);
 		myList.appendNode(ptempEmployee);
-	}*/
+	}
 
 	printReport(myList);
-
+return 0;
 
 }// end of main
 
