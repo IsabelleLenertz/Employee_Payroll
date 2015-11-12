@@ -1,23 +1,21 @@
 //*****************
 
-//Project Name: Project #3: Chapter 15 Employees
+//Project Name: Project #5: Employee Linked List
 
-//Project Description: Employee, Production Worker, Shift Supervisor, Team leader classed.
-// Create a virtual pay function
-// Store Employees in a array
-// Catch exception from the pay function
+//Project Description: Optimize employee list using a linked list instead of a vector.
 
 //Project Author: Lenertz Isabelle
 
 //Is this an extra credit Project:  No
 
-//Date completed: 10/21/2015
+//Date completed: 11/11/2015
 
 //Operating system used: Windows 10
 
 //IDE Used:  Eclipse
 
 //*****************
+
 #ifndef EMPLOYEE_HPP_
 #define EMPLOYEE_HPP_
 

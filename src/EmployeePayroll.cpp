@@ -1,20 +1,21 @@
 //*****************
 
-//Project Name: Project #4: using main parameters
+//Project Name: Project #5: Employee Linked List
 
-//Project Description: change array to vector and allow user to uses main parameter to launch the program
+//Project Description: Optimize employee list using a linked list instead of a vector.
 
 //Project Author: Lenertz Isabelle
 
 //Is this an extra credit Project:  No
 
-//Date completed: 10/24/2015
+//Date completed: 11/11/2015
 
 //Operating system used: Windows 10
 
 //IDE Used:  Eclipse
 
 //*****************
+
 #include <iostream>
 #include <stdio.h>
 #include <iomanip>
@@ -422,30 +423,29 @@ void payEveryone(EmployeeList& employees){
 				try{
 					double bonus = currentEmployee->getBonus();
 					cout << setw(15) << fixed << setprecision(2) << bonus;
-					cout << endl;
 				}
 				catch (ProductionWorker::InvalidShift &e){
-					cout << "Could not be paid. Shift not set."<< endl;
+					cout << "Could not be paid. Shift not set.";
 				}
 				catch (ProductionWorker::InvalidPayRate &e){
-					cout << "Could not be paid. Invalid pay rate."<< endl;
+					cout << "Could not be paid. Invalid pay rate.";
 				}
 				catch (ProductionWorker::InvalidHoursWorked &e){
-					cout << "Could not be paid. Invalid number of hours." << endl;
+					cout << "Could not be paid. Invalid number of hours.";
 				}
 				catch (ShiftSupervisor::InvalidBonus &e){
-					cout << "Could not be paid. Bonus not valid." << endl;
+					cout << "Could not be paid. Bonus not valid.";
 				}
 				catch (ShiftSupervisor::InvalidPay &e){
-					cout << "Could not be paid. Pay not valid." << endl;
+					cout << "Could not be paid. Pay not valid.";
 				}
 				catch (TeamLeader::InvalidFormationRqm &e){
-					cout << "Could not be paid. Invalid formation requirement." << endl;
+					cout << "Could not be paid. Invalid formation requirement.";
 				}
 				catch (TeamLeader::InvalidMonthlyBonus &e){
-					cout << "Could not be paid. Invalid monthly bonus." << endl;
+					cout << "Could not be paid. Invalid monthly bonus.";
 				}
-				cout << setw(30) << currentEmployee->getComment();
+				cout << setw(30) << currentEmployee->getComment() << endl;
 			}
 
 		}// end of for

@@ -1,20 +1,21 @@
 //*****************
 
-//Project Name: Project #4: using main parameters
+//Project Name: Project #5: Employee Linked List
 
-//Project Description: change array to vector and allow user to uses main parameter to launch the program
+//Project Description: Optimize employee list using a linked list instead of a vector.
 
 //Project Author: Lenertz Isabelle
 
 //Is this an extra credit Project:  No
 
-//Date completed: 10/24/2015
+//Date completed: 11/11/2015
 
 //Operating system used: Windows 10
 
 //IDE Used:  Eclipse
 
 //*****************
+
 #include "ShiftSupervisor.hpp"
 
 ShiftSupervisor::ShiftSupervisor() {

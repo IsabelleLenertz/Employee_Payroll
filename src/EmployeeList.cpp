@@ -1,9 +1,20 @@
-/*
- * EmployeeList.cpp
- *
- *  Created on: Nov 6, 2015
- *      Author: Isabelle
- */
+//*****************
+
+//Project Name: Project #5: Employee Linked List
+
+//Project Description: Optimize employee list using a linked list instead of a vector.
+
+//Project Author: Lenertz Isabelle
+
+//Is this an extra credit Project:  No
+
+//Date completed: 11/11/2015
+
+//Operating system used: Windows 10
+
+//IDE Used:  Eclipse
+
+//*****************
 
 #include "EmployeeList.hpp"
 
@@ -200,7 +211,7 @@ int EmployeeList::findNode(int searchId){
 	while (nodePtr) {
 		// remembers address of the next node
 		if ( searchId == nodePtr->data->getId() ){
-			// exists the while loop if the weight is found
+			// exists the while loop if the id is found
 			break;
 		}
 		else{
