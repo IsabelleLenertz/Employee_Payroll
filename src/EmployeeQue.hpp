@@ -1,29 +1,29 @@
 /*
- * EmployeeStack.hpp
+ * EmployeeQue.hpp
  *
- *  Created on: Nov 13, 2015
+ *  Created on: Nov 15, 2015
  *      Author: Isabelle
  */
 
-#ifndef EMPLOYEESTACK_HPP_
-#define EMPLOYEESTACK_HPP_
+#ifndef EMPLOYEEQUE_HPP_
+#define EMPLOYEEQUE_HPP_
 
 #include "EmployeeList.hpp"
 
-class EmployeeStack: public EmployeeList {
+class EmployeeQue: public EmployeeList {
 private:
 	ListNode * rear;
 
 public:
-	EmployeeStack();
-	virtual ~EmployeeStack();
+	EmployeeQue();
+	virtual ~EmployeeQue();
 
 	// Adds a new Employee to the stack.
-	bool push(Employee* newEmployee);
+	bool enque(Employee* newEmployee);
 
 	// Retrieves an Employee from the stack.
 	// the pointer is send to the user who is responsible for deleting it.
-	Employee * pop();
+	Employee * deque();
 
 	// returns true if the stack is empty
 	bool const isEmpty();
@@ -38,8 +38,6 @@ public:
 	void reverseList(){};
 	bool deleteNode(int position){return false;};
 
-
-
 };
 
-#endif /* EMPLOYEESTACK_HPP_ */
+#endif /* EMPLOYEEQUE_HPP_ */
