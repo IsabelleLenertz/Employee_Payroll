@@ -30,6 +30,7 @@ EmployeeList::~EmployeeList() {
 
 
 // Adds a new employee to the end of the list.
+// DLL
 void EmployeeList::appendNode(Employee* newEmployeePtr){
 
 	ListNode *nodePtr;
@@ -41,6 +42,7 @@ void EmployeeList::appendNode(Employee* newEmployeePtr){
 		// Put the address of the new employee inside the data pointer.
 		this->head->data = newEmployeePtr;
 		this->head->next = nullptr;
+		this->head->previous = nullptr;
 	} // end of if
 
 	// Else looks for the end of the list
@@ -56,6 +58,7 @@ void EmployeeList::appendNode(Employee* newEmployeePtr){
 		nodePtr->next->data = newEmployeePtr;
 		// Set the last pointer to nullptr
 		nodePtr->next->next = nullptr;
+		nodePtr->next->previous = nodePtr;
 	}// end of else
 }// end of appendNode
 
@@ -63,11 +66,12 @@ void EmployeeList::appendNode(Employee* newEmployeePtr){
  * Returns the list node pointed by the currentPtr
  */
 Employee* const EmployeeList::getCurrentPtr(void){
-	return this->currentPtr;
+	return this->currentPtr->data;
 }
 
 /**
  * Deletes the entire list.
+ * DLL
  */
 void EmployeeList::destroyList() {
 	ListNode *tempPtr, *nodePtr;
@@ -91,6 +95,7 @@ void EmployeeList::destroyList() {
 
 /**
  * Inserts an Employee in the lists after a specific position.
+ * DDL
  */
 bool EmployeeList::insertAfterNode(Employee* NewEmployee, int position){
 
@@ -118,18 +123,43 @@ bool EmployeeList::insertAfterNode(Employee* NewEmployee, int position){
 				nodePtr = nodePtr->next;
 			}
 		} // end of for	}
-		ListNode *newNode = new ListNode;
+		// Saves the position of the next node
 		tempNode = nodePtr->next;
-		nodePtr->next = newNode;
+
+		// sets the data of the new node
+		ListNode *newNode = new ListNode;
 		newNode->data = NewEmployee;
 		newNode->next = tempNode;
+		newNode->previous = nodePtr;
+
+		// If it is not the last node
+		if (tempNode != nullptr){
+			// inserts the new node.
+			nodePtr->next = newNode;
+			newNode->next->previous = newNode;
+		}
+		// If it is the last node
+		else{
+			//Adds the nod at the end
+			nodePtr->next = newNode;
+
+		}
+
 	} // end of if
 	else{
-		ListNode *newNode = new ListNode;
+		// Saves the position of the next node
 		tempNode = nodePtr;
+
+		// Creates the new node
+		ListNode *newNode = new ListNode;
 		newNode->data = NewEmployee;
 		newNode->next = tempNode;
+		newNode->previous = nullptr;
+
+		// Inserts the new node
 		this->head = newNode;
+		newNode->next->previous = newNode;
+
 	}
 	return true;
 }// end of insertNode
@@ -137,6 +167,7 @@ bool EmployeeList::insertAfterNode(Employee* NewEmployee, int position){
 
 /**
  * Inserts an Employee in the lists before a specific position.
+ * DLL
  */
 bool EmployeeList::insertBeforeNode(Employee* NewEmployee, int position){
 
@@ -152,16 +183,25 @@ bool EmployeeList::insertBeforeNode(Employee* NewEmployee, int position){
 	// Goes through the list and make sure the position the user wants to insert a node to exists.
 	// Return false if the position does not exist.
 	if (position == 1){
+		// Creates the new Node
 		ListNode *newNode = new ListNode;
-		tempptr = this->head;
 		newNode->data = NewEmployee;
 		newNode->next = tempptr;
+		newNode->previous = nullptr;
+
+		// Changes the head
 		this->head = newNode;
 	}//end of if
+
+	// If the user wants to add an element before position 0
+	else if( position ==0){
+		// Returns false to indicate failure
+		return false;
+	}
 	else{
 		// goes to the position indicated by the user. ptrbefore keeps track of the node before the position indicated by the user
 		for (int i=0; i < (position-1); i++ ) {
-			// check if we do not reach the end of list
+			// check if we do not reach the end of list returns false to indicate failure
 			if (tempptr->next == nullptr){
 				return false;
 			}
@@ -170,11 +210,16 @@ bool EmployeeList::insertBeforeNode(Employee* NewEmployee, int position){
 				tempptr = tempptr->next; // moves on to the next node
 			}
 		} // end of for
-		// Adds a node between ptrbefore and tempptr
+
+		// Creates the Node
 		ListNode *newNode = new ListNode;
 		newNode->data = NewEmployee;
 		newNode->next = tempptr;
+		newNode->previous = ptrbefore;
+
+		// Inserts the node after ptrbefore and before tempptr
 		ptrbefore->next = newNode;
+		tempptr->previous = newNode;
 	}
 	// indicates success
 	return true;
@@ -183,6 +228,7 @@ bool EmployeeList::insertBeforeNode(Employee* NewEmployee, int position){
 
 /**
  * Returns the size of the list.
+ * DLL
  */
 int EmployeeList::getSize() {
 	ListNode *nodePtr;
@@ -202,6 +248,7 @@ int EmployeeList::getSize() {
 /**
  * Returns the position of a node
  * Returns 0 if the node was not found
+ * DLL
  */
 int EmployeeList::findNode(int searchId){
 	ListNode *nodePtr;
@@ -232,35 +279,42 @@ int EmployeeList::findNode(int searchId){
 
 /**
  * Reverse the order of the list. the first Employee becomes the last one.
+ * DLL
  */
 void EmployeeList::reverseList() {
-	ListNode *nodePtr;
-	ListNode *tempHeadPtr, *temp;
+	ListNode *nodePtr, *tempptr, *firstNode;
 
-	tempHeadPtr = this->head ;
-	nodePtr = this->head->next;
+	// Stores the previous ptr
+	nodePtr = this->head;
+
+	// Goes through the list and reverses all the pointers.
 	while (nodePtr != nullptr) {
-		temp = nodePtr->next;
-		nodePtr->next = this->head;
-		this->head = nodePtr;
-		nodePtr = temp;
-	}		// while
-	tempHeadPtr->next = nullptr;
+		// Saves the previous node
+		tempptr = nodePtr->previous;
+		// Switches previous and next pointers.
+		nodePtr->previous = nodePtr->next;
+		nodePtr->next = tempptr;
+
+		// Remembers the previous node (the last previous node will be the head
+		firstNode = nodePtr;
+		// Goes to the next node
+		nodePtr = nodePtr->previous;
+	}// while
+
+	this->head = firstNode;
 } // end of reverseList
 
 /**
  * Deletes a node at a specific position (position >1)
  * returns true to signify success
  * returns false to signify the node was not find
+ * DLL
  */
 bool EmployeeList::deleteNode(int position){
 
 	// temporary pointer to a node
 	ListNode *nodePtr;
-	ListNode *prevNode;
 
-	// Initializes the previous node we want to keep track of.
-	prevNode = this->head;
 	// Check if the list is empty
 	if (this->head == nullptr){
 		return false;
@@ -280,35 +334,55 @@ bool EmployeeList::deleteNode(int position){
 			}
 			else{
 				// moves to the next node
-				prevNode = nodePtr;
 				nodePtr = nodePtr->next;
 			}
 		} // end of for
 		// if the user wants to delete the first node
 		if (position == 1) {
-				// if the user wants to delete the first node and it is the only node.
-				if (nodePtr->next == nullptr){
-					this->head = nullptr;
-				}// end of if
-				// if the user wants to delete the first node and it is not the only node.
-				else{
-					this->head = nodePtr->next;
-				}// end of else
+			// If the user wants to delete the first node and it is the only node.
+			if (nodePtr->next == nullptr){
+				// Deletes the data in the first node
+				delete nodePtr->data;
+				delete nodePtr;
+				// Sets the head to nullptr
+				this->head = nullptr;
+			}// if
 
-		}// end of if
-		//If the user wants to delete any other than the first one.
+			// If the user wants to delete the first node and it is not the only node.
+			else{
+				// Deletes the node
+				delete this->head->data;
+				delete this->head;
+
+				// Updates the head and the first node;
+				this->head = nodePtr->next;
+				nodePtr->previous = nullptr;
+
+			}// else
+
+		}// if (position == 1)
+
+		//If the user wants to delete any other than the first node.
 		else{
-			// moves to the next node
-			prevNode->next = nodePtr->next;
-		}// end of else
+			// If it is not the last node
+			if (nodePtr->next != nullptr){
+				// Connects the previous and the next node together
+				nodePtr->next->previous = nodePtr->previous;
+				nodePtr->previous->next = nodePtr->next;
 
-		// deletes the node and reconnects the two portion of the list.
-		prevNode->next = nodePtr->next;
-		// deletes the dynamically allocated memory
-		delete nodePtr->data;
-		delete nodePtr;
+			}
+			// If it is the last node
+			else{
+				// Connects the previous to nullptr
+				nodePtr->previous->next = nullptr;
+			}
 
-	} // end of if
+			// Deletes the data stored by the current node
+			delete nodePtr->data;
+			delete nodePtr;
+		}// else
+
+	}// if (position != 0)
 	else{
 		// return false if the user wants to delete position 0 (does not exist, we start at 1)
 		return false;
@@ -323,6 +397,7 @@ bool EmployeeList::deleteNode(int position){
  * Position the currentPtr to a specific position
  * return true to indicate success
  * Return false if the position did not exist
+ * DLL
  */
 bool EmployeeList::positionTo(int position){
 	// the position counter cannot keep track of number greater than 32768
@@ -343,7 +418,7 @@ bool EmployeeList::positionTo(int position){
 		}
 	}
 	// sets the current pointer to the Employee asked by the user
-	this->currentPtr = tempptr->data;
+	this->currentPtr = tempptr;
 	// indicates success.
 	return true;
 }

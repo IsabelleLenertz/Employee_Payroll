@@ -26,12 +26,13 @@
 struct ListNode {
 	Employee *data;
 	struct ListNode *next;
+	struct ListNode *previous;
 }; // ListNode
 
 class EmployeeList {
-private:
+protected:
 	ListNode *head;
-	Employee *currentPtr;
+	ListNode *currentPtr;
 
 public:
 	EmployeeList();
