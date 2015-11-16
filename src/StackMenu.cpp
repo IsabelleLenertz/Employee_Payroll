@@ -51,8 +51,6 @@ void stackManagement(EmployeeStack & stack){
 			cout << "You deleted all the employees in your stack" << endl;
 			break;
 		}
-
-
 		}// switch
 	}
 

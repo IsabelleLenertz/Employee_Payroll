@@ -66,7 +66,16 @@ void EmployeeList::appendNode(Employee* newEmployeePtr){
  * Returns the list node pointed by the currentPtr
  */
 Employee* const EmployeeList::getCurrentPtr(void){
-	return this->currentPtr->data;
+	Employee* returnpointer = nullptr;
+
+	// Returns the data only if the current pointer had been setup.
+	if (this->currentPtr != nullptr){
+		return this->currentPtr->data;
+	}
+
+	// Returns nullptr if the current pointer was not setup
+	return 	returnpointer;
+
 }
 
 /**
@@ -421,4 +430,67 @@ bool EmployeeList::positionTo(int position){
 	this->currentPtr = tempptr;
 	// indicates success.
 	return true;
+}
+
+// Positions the current pointer
+bool EmployeeList::goToFirst(){
+	bool returnvalue = false;
+
+	// Makes sure the list is not empty.
+	if ( this->getSize() != 0) {
+		// changes the current pointer and sets the return value to true
+		this->currentPtr = head;
+		returnvalue = true;
+	}
+
+	return returnvalue;
+}
+bool EmployeeList::goToNext(){
+	bool returnvalue = false;
+
+	// Makes sure there is a next node
+	if (this->currentPtr != nullptr){
+		if ( this->currentPtr->next != nullptr ){
+			// Changes the current pointer and sets the return value to true
+			this->currentPtr = this->currentPtr->next;
+			returnvalue = true;
+		}// if
+	}// if
+
+
+	return returnvalue;
+}
+bool EmployeeList::goToPrevious(){
+	bool returnvalue = false;
+
+	// Makes sure there is a previous node
+	if (this->currentPtr != nullptr){
+		if ( this->currentPtr->previous != nullptr ){
+			// Changes the current pointer and sets the return value to true
+			this->currentPtr = this->currentPtr->previous;
+			returnvalue = true;
+		}// if
+	}// if
+
+
+	return returnvalue;
+
+}
+bool EmployeeList::goToLast(){
+	bool returnvalue = false;
+	ListNode * tempPtr = this->currentPtr;
+
+	// If the list if not empty
+	if (this->getSize()!= 0){
+		// Goes to the last node
+		while (tempPtr->next != nullptr) {
+		tempPtr = tempPtr->next;
+		}	// while
+
+		// Changes the current pointer and sets the return value to true to indicate success
+		this->currentPtr = tempPtr;
+		returnvalue = true;
+	}// if
+
+	return returnvalue;
 }

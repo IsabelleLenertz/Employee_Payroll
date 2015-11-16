@@ -19,6 +19,7 @@
 #include "EmployeeList.hpp"
 #include "EmployeeStack.hpp"
 #include "StackMenu.hpp"
+#include "GoToMenu.hpp"
 
 
 using namespace std;

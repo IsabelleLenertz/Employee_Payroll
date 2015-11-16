@@ -38,7 +38,6 @@ public:
 	EmployeeList();
 	virtual ~EmployeeList();
 
-	// Function Prototypes
 	/**
 	 * Adds a new employee to the end of the list.
 	 **/
@@ -87,13 +86,17 @@ public:
 	 */
 	bool deleteNode(int position);
 
-	/**
-	 * Position the currentPtr to a specific position
-	 * return true to indicate success
-	 * Return false if the position did not exist
-	 */
+
+	// Position the currentPtr to a specific position
+	// return true to indicate success
+	// Return false if the position did not exist
 	bool positionTo(int position);
 
+	// Positions the current pointer
+	bool goToFirst();
+	bool goToNext();
+	bool goToPrevious();
+	bool  goToLast();
 
 
 };

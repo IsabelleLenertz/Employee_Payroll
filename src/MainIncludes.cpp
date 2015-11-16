@@ -26,11 +26,12 @@ int getUserChoice(){
 	cout << "3. Enter Team Leader Information" << endl;
 	cout << "4. Pay Everyone" << endl;
 	cout << "5. Print Report" << endl;
-	cout << "6. Stack" << endl;
+	cout << "6. Stack Menu" << endl;
+	cout << "8. Goto Menu" << endl;
 	cout << "9. Exit Program" << endl;
 
 	//Asks the used for input and returns it
-	return Utilities::inputInt("Please enter a menu option :", 1, 6, 9);
+	return Utilities::inputInt("Please enter a menu option :", 1, 9, 9);
 }
 
 

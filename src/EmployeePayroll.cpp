@@ -240,14 +240,20 @@ int main(int argc, char* argv[]) {
 			// Prints a report
 			printReport(pListOfEmployee);
 			break;
-		}
+		}// case 5
 
 		// If the user chooses to go into the stack menu
 		case 6:{
 			stackManagement(stack);
 			break;
 
-		}
+		} // case6
+
+		// If the user chooses to go to the go to menu
+		case 8:{
+			goToMenu(pListOfEmployee);
+			break;
+		}// case 8
 
 		//If the user chooses to exit the program
 		case 9: {
