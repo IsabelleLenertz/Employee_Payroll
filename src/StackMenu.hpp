@@ -22,5 +22,8 @@ void pushProductionWorker(EmployeeStack & stack);
 // Pops a production worker out of the stacks and display its information.
 void popProductionWorker(EmployeeStack & stack);
 
+// Destroy the stack and gives appropriate feedback;
+void destroyStack(EmployeeStack & stack);
+
 
 #endif /* EMPLOYEELIST_HPP_ */

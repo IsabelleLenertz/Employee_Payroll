@@ -27,6 +27,7 @@ int getUserChoice(){
 	cout << "4. Pay Everyone" << endl;
 	cout << "5. Print Report" << endl;
 	cout << "6. Stack Menu" << endl;
+	cout << "7. Que Menu" << endl;
 	cout << "8. Goto Menu" << endl;
 	cout << "9. Exit Program" << endl;
 

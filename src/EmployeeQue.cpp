@@ -8,12 +8,11 @@
 #include "EmployeeQue.hpp"
 
 EmployeeQue::EmployeeQue() {
-	// TODO Auto-generated constructor stub
-
+	this->rear = nullptr;
 }
 
 EmployeeQue::~EmployeeQue() {
-	// TODO Auto-generated destructor stub
+	cout << "You are destroying a queue of Employee." << endl;
 }
 
 // Adds a new Employee to the stack.
@@ -75,7 +74,7 @@ Employee * EmployeeQue::deque(){
 	}
 
 	// Check if there is only one Employee in the stack
-	else if ( (this->rear == this->head) && (this->head != nullptr)){
+	else if ( (this->getSize()) == 1 ){
 		// Saves the pointer to the Employee to return
 		EmployeeDequed = this->rear->data;
 
@@ -85,7 +84,6 @@ Employee * EmployeeQue::deque(){
 		// Points rear and head to nullptr (indicates that the stack is now empty.
 		this->rear = nullptr;
 		this->head = nullptr;
-
 	}
 
 	// Returns the pointer to the Employee

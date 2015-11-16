@@ -20,6 +20,8 @@
 #include "EmployeeStack.hpp"
 #include "StackMenu.hpp"
 #include "GoToMenu.hpp"
+#include "EmployeeQue.hpp"
+#include "QueueMenu.hpp"
 
 
 using namespace std;

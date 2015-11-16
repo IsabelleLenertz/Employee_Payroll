@@ -47,8 +47,7 @@ void stackManagement(EmployeeStack & stack){
 			break;
 		}
 		case 4:{
-			stack.destroyList();
-			cout << "You deleted all the employees in your stack" << endl;
+			destroyStack(stack);
 			break;
 		}
 		}// switch
@@ -77,15 +76,22 @@ void popProductionWorker(EmployeeStack & stack){
 	// Pops the production worker out of the stack.
 	pPopedProdWorker = stack.pop();
 
-	// Displays its Id, name, and pay
-	cout << left << setw(7) << "ID" << " " <<  setw(30) << "Full Name" << " " << setw(22) << "Type" << " " << setw(10) << "Hire Date" << endl;
-	cout << "------- ------------------------------ ---------------------- ----------" << endl;
-	cout << left << setw(7) << pPopedProdWorker->getId() << " ";
-	cout << left << setw(30) << pPopedProdWorker->getName() << " ";
-	cout << left << setw(22) << pPopedProdWorker->whatAmI() << " ";
-	cout << left << setw(10) << pPopedProdWorker->getDate() << " " << endl;
+	if (pPopedProdWorker != nullptr){
+		// Displays its Id, name, and pay
+		displayEmployee(pPopedProdWorker);
+	}
 
 	// Deletes the employee
 	delete pPopedProdWorker;
 
+}
+
+void destroyStack(EmployeeStack & stack){
+	if (stack.getSize() == 0){
+		cout << "Your stack is already empty" << endl;
+	}
+	else{
+		stack.destroyList();
+		cout << "You deleted all the employees in your stack." << endl;
+	}
 }

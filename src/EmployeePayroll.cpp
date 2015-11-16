@@ -76,6 +76,7 @@ int main(int argc, char* argv[]) {
 	bool continueWhileLoop = true; // will be changed to false if the user entered command line parameters
 	EmployeeList pListOfEmployee;
 	EmployeeStack stack;
+	EmployeeQue queue;
 
 	 // Check for the number of parameters
 	if (argc > 3){
@@ -248,6 +249,12 @@ int main(int argc, char* argv[]) {
 			break;
 
 		} // case6
+
+		// If the user chooses to o into the queue menu
+		case 7:{
+			queueManagement(queue);
+			break;
+		}// case 7
 
 		// If the user chooses to go to the go to menu
 		case 8:{
