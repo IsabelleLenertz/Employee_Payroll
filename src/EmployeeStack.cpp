@@ -8,7 +8,6 @@
 #include "EmployeeStack.hpp"
 
 EmployeeStack::EmployeeStack(){
-	this->rear = nullptr;
 }
 
 EmployeeStack::~EmployeeStack() {
@@ -30,7 +29,6 @@ bool EmployeeStack::push(Employee* newEmployee){
 
 		// Adds it to the stack
 		this->head = newNode;
-		this->rear = newNode;
 
 		// Indicates success
 		returnvalue = true;
@@ -41,13 +39,13 @@ bool EmployeeStack::push(Employee* newEmployee){
 		// Creates a new node.
 		ListNode *newNode = new ListNode;
 		newNode->data = newEmployee;
-		newNode->previous = this->rear;
-		newNode->next = nullptr;
+		newNode->previous = nullptr;
+		newNode->next = head;
 
 		// Adds it to the top of the stack.
-		this->rear->next = newNode;
+		this->head->previous = newNode;
 		// Updates the head.
-		this->rear = newNode;
+		this->head = newNode;
 
 		// Indicates success
 		returnvalue = true;
@@ -66,28 +64,28 @@ Employee * EmployeeStack::pop(){
 	Employee * EmployeePoped = nullptr;
 
 	// Check if there is more than one Employee in the stack.
-	if ( this->rear != this->head ){
+	if ( !(this->isEmpty()) && this->head->next != nullptr ){
 		// Saves the pointer to the Employee to return
-		EmployeePoped = this->rear->data;
+		EmployeePoped = this->head->data;
 
-		// Points the rear to the last Employee
-		this->rear = this->rear->previous;
+		// Points the head to the last Employee
+		this->head = this->head->next;
 
 		// Deletes the old node (but does not delete the Employee)
-		delete this->rear->next;
-		this->rear->next = nullptr;
+		delete this->head->previous;
+		this->head->previous = nullptr;
 	}
 
 	// Check if there is only one Employee in the stack
-	else if ( (this->rear == this->head) && (this->head != nullptr)){
+	else if ( (this->getSize()) == 1 ){
+		cout << "only 1 to pop." << endl;
+
 		// Saves the pointer to the Employee to return
-		EmployeePoped = this->rear->data;
-
+		EmployeePoped = this->head->data;
 		// Deletes the node
-		delete this->rear;
+		delete this->head;
 
-		// Points rear and head to nullptr (indicates that the stack is now empty.
-		this->rear = nullptr;
+		// Points  head to nullptr (indicates that the stack is now empty).
 		this->head = nullptr;
 
 	}
@@ -102,7 +100,7 @@ bool const EmployeeStack::isEmpty(){
 	bool returnvalue = false;
 
 	// If the stack is empty
-	if ( (this->head == nullptr) && (this->rear == nullptr) ){
+	if ( this->head == nullptr ){
 		returnvalue = true;
 	}
 

@@ -12,7 +12,6 @@
 
 class EmployeeStack: public EmployeeList {
 private:
-	ListNode * rear;
 
 public:
 	EmployeeStack();
