@@ -1,14 +1,17 @@
 //*****************
 
-//Project Name: Project #5: Employee Linked List
+//Project Name: Project #6: Queue, Stack, and recursive functions
 
-//Project Description: Optimize employee list using a linked list instead of a vector.
+//Project Description: 	Create a Queue and a stack class inherited from the Linked list.
+//						Create two recursive function (total pay, and destroy list).
+//						Create a gotTo menu
 
 //Project Author: Lenertz Isabelle
 
-//Is this an extra credit Project:  No
+//Is this an extra credit Project:  yes
+//									Make your linked list a doubly linked list
 
-//Date completed: 11/11/2015
+//Date completed: 24/11/2015
 
 //Operating system used: Windows 10
 
@@ -19,52 +22,6 @@
 #include "MainIncludes.hpp"
 
 using namespace std;
-
-/*
-int main(){
-	EmployeeStack myList;
-	int position = 0;
-
-	for (int i = 0; i<1; i++){
-		Employee* tempEmployee = new TeamLeader;
-		tempEmployee->setId(i+1);
-		myList.push(tempEmployee);
-	}
-	printReport(myList);
-
-
-	cout << "popping an Employee!" << endl;
-	Employee * tempEmployee = myList.pop();
-
-	if (tempEmployee != nullptr){
-		cout << "ID:" << tempEmployee->getId() << endl;
-		delete tempEmployee;
-	}
-	else{
-		cout << "No one to pop" << endl;
-	}
-
-	cout << "Done!" << endl;
-	printReport(myList);
-
-
-while (position != 10) {
-	position = Utilities::inputInt("position to add", 0, 10, 10);
-	Employee* tempEmployee = new TeamLeader;
-	tempEmployee->setId(999);
-	myList.insertAfterNode(tempEmployee, position);
-
-	printReport(myList);
-
-	position = Utilities::inputInt("Employee to delete (position)", 0, 10, 10);
-	myList.deleteNode(position);
-	printReport(myList);
-
-}
-	return 0;
-}*/
-//
-
 
 int main(int argc, char* argv[]) {
 
@@ -243,12 +200,11 @@ int main(int argc, char* argv[]) {
 			break;
 		}// case 5
 
-		// If the user chooses to go into the stack menu
+		// If the user chooses to go to the go to menu
 		case 6:{
-			stackManagement(stack);
+			goToMenu(pListOfEmployee);
 			break;
-
-		} // case6
+		}// case 6
 
 		// If the user chooses to o into the queue menu
 		case 7:{
@@ -256,17 +212,30 @@ int main(int argc, char* argv[]) {
 			break;
 		}// case 7
 
-		// If the user chooses to go to the go to menu
+		// If the user chooses to go into the stack menu
 		case 8:{
-			goToMenu(pListOfEmployee);
+			stackManagement(stack);
 			break;
-		}// case 8
 
+		} // case6
+
+
+
+
+
+		// If the user chooses to destroy the list recursively
 		case 9:{
 			int numberDestroyed = pListOfEmployee.recursiveDestruction();
 			cout << "You destroyed " << numberDestroyed << " Employee(s)" << endl;
 			break;
-		}
+		}// case 9
+
+		// If the user chooses to get to total pay for this period
+		case 10:{
+			int totalPay = pListOfEmployee.recPayPeriod();
+			cout << "Total pay for this period: $" << fixed << setprecision(2) << totalPay << endl;
+			break;
+		}// case 9
 
 		//If the user chooses to exit the program
 		case 11: {

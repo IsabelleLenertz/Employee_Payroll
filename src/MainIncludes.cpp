@@ -26,11 +26,11 @@ int getUserChoice(){
 	cout << "3. Enter Team Leader Information" << endl;
 	cout << "4. Pay Everyone" << endl;
 	cout << "5. Print Report" << endl;
-	cout << "6. Stack Menu" << endl;
+	cout << "6. Goto Menu" << endl;
 	cout << "7. Que Menu" << endl;
-	cout << "8. Goto Menu" << endl;
+	cout << "8. Stack Menu" << endl;
 	cout << "9. Recursively destroy the list of employees" << endl;
-	cout << "10. Display total pay for the period." << endl;
+	cout << "10. Display total pay for the period (recursively" << endl;
 	cout << "11. Exit Program" << endl;
 
 

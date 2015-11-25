@@ -21,29 +21,33 @@ void goToMenu(EmployeeList & pList){
 			break;
 		}// case 1
 
-		// Goes to the Last node
-		case 2:{
-			if ( !(pList.goToLast()) ){
-				cout << "The Last node does not exist." << endl;
-			}
-			break;
-		}// case 2
-
 		// Goes to the next node
-		case 3:{
+		case 2:{
 			if ( !(pList.goToNext()) ){
 				cout << "The Next node does not exist." << endl;
 			}
 			break;
-		}// case 3
+		}// case 2
 
 		// Goes to the previous node
-		case 4:{
+		case 3:{
 			if ( !(pList.goToPrevious()) ){
 				cout << "The previous node does not exist." << endl;
 			}
 			break;
+		}// case 3
+
+		// Goes to the Last node
+		case 4:{
+			if ( !(pList.goToLast()) ){
+				cout << "The Last node does not exist." << endl;
+			}
+			break;
 		}// case 4
+
+
+
+
 
 		// Prints the current employee
 		case 5:{
@@ -74,9 +78,9 @@ int printgoToMenu(){
 
 	// Prints the menu
 	cout << "1. Goto First" << endl;
-	cout << "2. Goto Last" << endl;
-	cout << "3. Goto Next" << endl;
-	cout << "4. Goto Previous" << endl;
+	cout << "2. Goto Next" << endl;
+	cout << "3. Goto Previous" << endl;
+	cout << "4. Goto Last" << endl;
 	cout << "5. Display Current" << endl;
 	cout << "6. Return to Main Menu" << endl;
 

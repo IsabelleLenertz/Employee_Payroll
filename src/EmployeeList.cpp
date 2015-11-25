@@ -1,20 +1,4 @@
-//*****************
 
-//Project Name: Project #5: Employee Linked List
-
-//Project Description: Optimize employee list using a linked list instead of a vector.
-
-//Project Author: Lenertz Isabelle
-
-//Is this an extra credit Project:  No
-
-//Date completed: 11/11/2015
-
-//Operating system used: Windows 10
-
-//IDE Used:  Eclipse
-
-//*****************
 
 #include "EmployeeList.hpp"
 
@@ -497,7 +481,7 @@ bool EmployeeList::goToLast(){
 
 int EmployeeList::recursiveDestruction(){
 	return privateRecursiveDestruction(this->head);
-}
+}// recursiveDestruction
 
 
 // Recursively destroys the list
@@ -523,11 +507,37 @@ int EmployeeList::privateRecursiveDestruction(ListNode * nodePtr){
 
 		// Returns the number of node that have been destroyed;
 		return 1 + returnvalue;
-	}
+	}// if
 
 	// If the recursiveDestruction function was called with nullptr.
 	else{
 		// Returns 0 if the recrusiveDetroction function was called with nullptr.
 		return returnvalue;
+	} // else
+}// privateRecursiveDestruction
+
+// Goes through the entire list and returns the total pay
+// Adds the pay of each employee in the list
+// Recursive function
+double EmployeeList::privateRecPayPeriod(ListNode * nodePtr){
+	double totalPay = 0;
+
+	// If the node contains an employee, adds the its pay to the pay of the other employees
+	if (nodePtr != nullptr){
+		totalPay = privateRecPayPeriod(nodePtr->next) + nodePtr->data->pay();
 	}
-}
+	// If the node pointer is nullptr, does not add a pay to the total
+	else{
+		totalPay = 0;
+	}
+
+	return totalPay;
+}// privateRecPayPeriod
+
+
+// Goes through the entire list and returns the total pay
+// Adds the pay of each employee in the list
+// Recursive function
+double EmployeeList::recPayPeriod(){
+	return privateRecPayPeriod(this->head);
+}// recursiveDestruction
