@@ -34,6 +34,11 @@ protected:
 	ListNode *head;
 	ListNode *currentPtr;
 
+	// Recursively destroys a part of the list
+	// Returns the number of Employees destroyed
+	int privateRecursiveDestruction(ListNode * nodePtr);
+
+
 public:
 	EmployeeList();
 	virtual ~EmployeeList();
@@ -97,6 +102,10 @@ public:
 	bool goToNext();
 	bool goToPrevious();
 	bool  goToLast();
+
+	// Recursively destroys the list
+	// Returns the number of Employees destroyed
+	int recursiveDestruction();
 
 
 };

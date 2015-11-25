@@ -262,8 +262,14 @@ int main(int argc, char* argv[]) {
 			break;
 		}// case 8
 
+		case 9:{
+			int numberDestroyed = pListOfEmployee.recursiveDestruction();
+			cout << "You destroyed " << numberDestroyed << " Employee(s)" << endl;
+			break;
+		}
+
 		//If the user chooses to exit the program
-		case 9: {
+		case 11: {
 			// Make sure the user wants to exist the program
 			cout << "Are you sure you want to exit the program? " << endl;
 			cout << "This software does not save any data to the disk, the information about " << pListOfEmployee.getSize() << " employees will be lost." << endl;

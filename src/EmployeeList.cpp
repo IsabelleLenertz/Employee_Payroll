@@ -494,3 +494,40 @@ bool EmployeeList::goToLast(){
 
 	return returnvalue;
 }
+
+int EmployeeList::recursiveDestruction(){
+	return privateRecursiveDestruction(this->head);
+}
+
+
+// Recursively destroys the list
+// Returns the number of Employees destroyed
+int EmployeeList::privateRecursiveDestruction(ListNode * nodePtr){
+	int returnvalue = 0;
+
+	// If the recursiveDestruction function was called with a valid pointer
+	if (nodePtr != nullptr){
+		// Goes to the next node
+
+		returnvalue = privateRecursiveDestruction(nodePtr->next);
+		// Deletes the last node of the list
+		if (nodePtr->previous!= nullptr){
+			nodePtr->previous->next = nullptr;
+		}
+		else{
+			// If the last node is the first node , set the head to nullptr
+			this->head = nullptr;
+		}
+		delete nodePtr->data;
+		delete nodePtr;
+
+		// Returns the number of node that have been destroyed;
+		return 1 + returnvalue;
+	}
+
+	// If the recursiveDestruction function was called with nullptr.
+	else{
+		// Returns 0 if the recrusiveDetroction function was called with nullptr.
+		return returnvalue;
+	}
+}
